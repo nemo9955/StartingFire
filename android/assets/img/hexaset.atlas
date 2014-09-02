@@ -1,0 +1,27 @@
+
+hexaset.png
+size: 390,169
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+gras-hex
+  rotate: false
+  xy: 1, 1
+  size: 128, 167
+  orig: 128, 167
+  offset: 0, 0
+  index: -1
+sand-hex
+  rotate: false
+  xy: 131, 1
+  size: 128, 167
+  orig: 128, 167
+  offset: 0, 0
+  index: -1
+water-hex
+  rotate: false
+  xy: 261, 1
+  size: 128, 167
+  orig: 128, 167
+  offset: 0, 0
+  index: -1

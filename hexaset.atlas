@@ -1,0 +1,13 @@
+
+hexaset.png
+size: 130,169
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+gras-hex
+  rotate: false
+  xy: 1, 1
+  size: 128, 167
+  orig: 128, 167
+  offset: 0, 0
+  index: -1
