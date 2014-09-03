@@ -21,7 +21,7 @@ public class DesktopLauncher {
 			param.edgePadding = true;
 
 			TexturePacker.process(param, "/home/nemo9955/CodeStation/proiecteJava/starting-fire/android/assets/hexas",//
-					"/home/nemo9955/CodeStation/proiecteJava/starting-fire/android/assets/img", "hexaset");
+					"/home/nemo9955/CodeStation/proiecteJava/starting-fire/android/assets", "hexaset");
 		}
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new StartingFire(), config);

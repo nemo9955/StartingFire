@@ -1,75 +1,26 @@
 
 hexaset.png
-size: 650,338
+size: 390,169
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-dirt
-  rotate: false
-  xy: 1, 170
-  size: 128, 167
-  orig: 128, 167
-  offset: 0, 0
-  index: -1
-grass
+gras-hex
   rotate: false
   xy: 1, 1
   size: 128, 167
   orig: 128, 167
   offset: 0, 0
   index: -1
-gravel
-  rotate: false
-  xy: 131, 170
-  size: 128, 167
-  orig: 128, 167
-  offset: 0, 0
-  index: -1
-sand
+sand-hex
   rotate: false
   xy: 131, 1
   size: 128, 167
   orig: 128, 167
   offset: 0, 0
   index: -1
-small_fire
-  rotate: false
-  xy: 261, 170
-  size: 128, 167
-  orig: 128, 167
-  offset: 0, 0
-  index: 1
-small_fire
+water-hex
   rotate: false
   xy: 261, 1
-  size: 128, 167
-  orig: 128, 167
-  offset: 0, 0
-  index: 2
-small_fire
-  rotate: false
-  xy: 391, 170
-  size: 128, 167
-  orig: 128, 167
-  offset: 0, 0
-  index: 3
-small_fire_unlit
-  rotate: false
-  xy: 391, 1
-  size: 128, 167
-  orig: 128, 167
-  offset: 0, 0
-  index: -1
-tile_highlight
-  rotate: false
-  xy: 521, 170
-  size: 128, 167
-  orig: 128, 167
-  offset: 0, 0
-  index: -1
-water
-  rotate: false
-  xy: 521, 1
   size: 128, 167
   orig: 128, 167
   offset: 0, 0
