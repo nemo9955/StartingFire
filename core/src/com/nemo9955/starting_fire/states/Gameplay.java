@@ -28,7 +28,7 @@ public class Gameplay extends ScreenAdapter {
 	public void show() {
 		Gdx.input.setInputProcessor(cameraController);
 
-		world = new HexWorld(2, 2, 127, 82);
+		world = new HexWorld(4, 4, 127, 82);
 	}
 
 	@Override
@@ -41,6 +41,7 @@ public class Gameplay extends ScreenAdapter {
 		SF.spritesBatch.setProjectionMatrix(camera.combined);
 		SF.spritesBatch.begin();
 		world.update(delta);
+		// System.out.println("game render");
 		SF.spritesBatch.end();
 	}
 
