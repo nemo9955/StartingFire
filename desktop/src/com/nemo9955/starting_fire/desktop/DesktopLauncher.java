@@ -20,8 +20,8 @@ public class DesktopLauncher {
 			param.limitMemory = false;
 			param.edgePadding = true;
 
-			TexturePacker.process(param, "/home/nemo9955/CodeStation/proiecteJava/starting-fire/android/assets/hexas",//
-					"/home/nemo9955/CodeStation/proiecteJava/starting-fire/android/assets", "hexaset");
+			TexturePacker.process(param, "/home/nemo9955/CodeStation/proiecteJava/StartingFire/android/assets/hexas",//
+					"/home/nemo9955/CodeStation/proiecteJava/StartingFire/android/assets/img", "hexaset");
 		}
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new StartingFire(), config);
