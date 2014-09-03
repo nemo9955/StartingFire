@@ -11,7 +11,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.HexagonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.utils.Array;
+import com.nemo9955.starting_fire.hexagons.HexaList;
 import com.nemo9955.starting_fire.storage.Assets;
 import com.nemo9955.starting_fire.storage.SF;
 import com.nemo9955.starting_fire.utils.OrthoCamController;
@@ -32,28 +35,41 @@ public class Gameplay extends ScreenAdapter {
 
 		TextureAtlas hexas = Assets.HEXAS.asset(TextureAtlas.class);
 
-		map = new TiledMap();
-		TiledMapTile[] tiles = new TiledMapTile[3];
-		tiles[0] = new StaticTiledMapTile(hexas.findRegion("water-hex"));
-		tiles[1] = new StaticTiledMapTile(hexas.findRegion("sand-hex"));
-		tiles[2] = new StaticTiledMapTile(hexas.findRegion("gras-hex"));
+		TiledMapTile[] tiles = new TiledMapTile[HexaList.values().length];
 
-		MapLayers layers = map.getLayers();
-		for (int l = 0; l < 1; l++) {
-			TiledMapTileLayer layer = new TiledMapTileLayer(10, 10, 128, 83);
-			for (int y = 0; y < layer.getHeight(); y++) {
-				for (int x = 0; x < layer.getWidth(); x++) {
-					int id = (int) (Math.random() * 3);
-					Cell cell = new Cell();
-					cell.setTile(tiles[id]);
-
-					layer.setCell(x, y, cell);
-				}
-			}
-			layers.add(layer);
+		for (int i = 0; i < HexaList.values().length; i++) {
+			tiles[i] = new StaticTiledMapTile(hexas.findRegion(HexaList.values()[i].toString()));
+			// System.out.println(hexas.getRegions().get(i).name);
 		}
+		// tiles[0] = new StaticTiledMapTile(hexas.findRegion("water-hex"));
+		// tiles[1] = new StaticTiledMapTile(hexas.findRegion("sand-hex"));
+		// tiles[2] = new StaticTiledMapTile(hexas.findRegion("gras-hex"));
 
-		renderer = new HexagonalTiledMapRenderer(map, SF.spritesBatch);
+		map = new TiledMap();
+		MapLayers layers = map.getLayers();
+		TiledMapTileLayer floorL = new TiledMapTileLayer(10, 10, 127, 82);
+		for (int y = 0; y < floorL.getHeight(); y++) {
+			for (int x = 0; x < floorL.getWidth(); x++) {
+				int id = (int) (Math.random() * tiles.length);
+				Cell cell = new Cell();
+				cell.setTile(tiles[id]);
+				floorL.setCell(x, y, cell);
+			}
+		}
+		// floorL.getWidth(), floorL.getHeight(), (int) floorL.getTileWidth(), (int) floorL.getTileHeight()
+		TiledMapTileLayer onflL = new TiledMapTileLayer(10, 10, 127, 82);
+		Cell cell = new Cell();
+		Array<StaticTiledMapTile> foc = new Array<StaticTiledMapTile>(3);
+		foc.add(new StaticTiledMapTile(hexas.findRegion("water")));
+		foc.add(new StaticTiledMapTile(hexas.findRegion("sand")));
+		foc.add(new StaticTiledMapTile(hexas.findRegion("small_fire", 3)));
+		cell.setTile(new AnimatedTiledMapTile(0.3f, foc));
+		onflL.setCell(0, 0, cell);
+
+		layers.add(onflL);
+		layers.add(floorL);
+
+		renderer = new HexagonalTiledMapRenderer(map, 1f, SF.spritesBatch);
 	}
 
 	@Override
