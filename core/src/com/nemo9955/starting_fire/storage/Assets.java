@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public enum Assets {
 
 	HEXAS("img/hexaset.atlas", TextureAtlas.class), //
-	ELEMENTS_PACK("img/MenuImages.atlas", TextureAtlas.class), //
-	SKIN_JSON("img/MenuImages.json", Skin.class); //
+	ELEMENTS_PACK("img/skinset.atlas", TextureAtlas.class), //
+	SKIN_JSON("img/skinset.json", Skin.class); //
 
 	final String	pth;
 	final Class<?>	cls;

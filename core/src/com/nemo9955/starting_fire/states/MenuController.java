@@ -13,7 +13,7 @@ public class MenuController extends ScreenAdapter {
 
 	public StateMachine<MenuController>	mst		= new StackStateMachine<MenuController>(this);
 
-	final Stage							stage	= new Stage(new ScreenViewport());
+	final Stage							stage	= new Stage(new ScreenViewport(), SF.spritesBatch);
 
 	@Override
 	public void show() {

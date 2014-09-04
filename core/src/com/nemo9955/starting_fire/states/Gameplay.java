@@ -1,9 +1,11 @@
 package com.nemo9955.starting_fire.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.nemo9955.starting_fire.game.GamePlayStage;
 import com.nemo9955.starting_fire.game.world.HexWorld;
 import com.nemo9955.starting_fire.storage.SF;
 import com.nemo9955.starting_fire.utils.OrthoCamController;
@@ -15,19 +17,22 @@ public class Gameplay extends ScreenAdapter {
 	private OrthographicCamera	camera;
 	private OrthoCamController	cameraController;
 
+	private GamePlayStage		stage;
+
 	{
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false);
 		camera.update();
 
-		cameraController = new OrthoCamController(camera);
+		stage = new GamePlayStage();
 
+		cameraController = new OrthoCamController(camera);
 	}
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(cameraController);
-
+		Gdx.input.setInputProcessor(new InputMultiplexer(stage, cameraController));
+		stage.restart();
 		world = new HexWorld(4, 4, 127, 82);
 	}
 
@@ -40,13 +45,14 @@ public class Gameplay extends ScreenAdapter {
 
 		SF.spritesBatch.setProjectionMatrix(camera.combined);
 		SF.spritesBatch.begin();
-		world.update(delta);
-		// System.out.println("game render");
+		world.manage(delta);
 		SF.spritesBatch.end();
+		stage.manage(delta);
 	}
 
 	@Override
 	public void resize( int width, int height ) {
+		stage.resize(width, height);
 		camera.setToOrtho(false, width, height);
 		camera.update();
 	}
@@ -57,6 +63,8 @@ public class Gameplay extends ScreenAdapter {
 	}
 
 	@Override
-	public void dispose() {}
+	public void dispose() {
+		stage.dispose();
+	}
 
 }

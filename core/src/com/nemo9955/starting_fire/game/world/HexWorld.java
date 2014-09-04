@@ -69,7 +69,8 @@ public class HexWorld implements Disposable {
 
 				if ( row == col && row == 1 ) {
 					CAnimation anim = eng.createComponent(CAnimation.class);
-					anim.anim = new Animation(0.2f, Assets.HEXAS.asset(TextureAtlas.class).findRegions("small_fire"), PlayMode.LOOP_PINGPONG);
+					anim.anim = new Animation(0.1f, Assets.HEXAS.asset(TextureAtlas.class).findRegions("small_fire"),
+								PlayMode.LOOP_PINGPONG);
 					ent.add(anim);
 				}
 				if ( col == 1 && row == 2 ) {
@@ -87,7 +88,7 @@ public class HexWorld implements Disposable {
 	 * 
 	 * @param delta
 	 */
-	public void update( float delta ) {
+	public void manage( float delta ) {
 		stateTime += delta;
 		// stateTime %= 86;
 		eng.update(delta);

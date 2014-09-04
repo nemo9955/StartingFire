@@ -19,7 +19,7 @@ public class StartingFire extends Game {
 
 	@Override
 	public void dispose() {
-		super.dispose();
+		SF.spritesBatch.dispose();
 		SF.manager.dispose();
 		Gdx.app.log("life", "All resources succesfully disposed !");
 	}

@@ -19,9 +19,9 @@ public class RenderSystem extends IteratingSystem {
 
 	@SuppressWarnings("unchecked")
 	public RenderSystem() {
-		super(Family.getFor(ComponentType.getBitsFor(CPosition.class, CWorld.class),//
-				ComponentType.getBitsFor(CTexture.class, CAnimation.class),//
-				ComponentType.getBitsFor()));
+		super(Family.getFor(ComponentType.getBitsFor(CPosition.class, CWorld.class),
+					ComponentType.getBitsFor(CTexture.class, CAnimation.class),
+					ComponentType.getBitsFor()));
 	}
 
 	@Override
@@ -32,7 +32,8 @@ public class RenderSystem extends IteratingSystem {
 		CAnimation anim = ca.get(entity);
 		if ( tex != null ) {
 			for (TextureRegion texture : tex.tex)
-				SF.spritesBatch.draw(texture, po.x, po.y, texture.getRegionWidth() * wo.world.scaling, texture.getRegionHeight() * wo.world.scaling);
+				SF.spritesBatch.draw(texture, po.x, po.y, texture.getRegionWidth() * wo.world.scaling, texture.getRegionHeight()
+							* wo.world.scaling);
 		}
 		if ( anim != null ) {
 			TextureRegion draw = anim.anim.getKeyFrame(wo.world.stateTime, true);

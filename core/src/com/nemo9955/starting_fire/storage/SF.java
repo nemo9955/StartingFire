@@ -10,14 +10,14 @@ import com.nemo9955.starting_fire.states.MenuController;
 
 public class SF {
 
+	public static final AssetManager	manager			= new AssetManager();
+	public static final SpriteBatch		spritesBatch	= new SpriteBatch();
 	public static StartingFire			game;
 
-	public static final AssetManager	manager			= new AssetManager();
 	public static Skin					skin;
 
 	public static MenuController		mc				= new MenuController();
 	public static MainMenu				mainMenu;
 	public static Gameplay				gameplay;
 
-	public static final SpriteBatch		spritesBatch	= new SpriteBatch();
 }

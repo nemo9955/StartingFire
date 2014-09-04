@@ -11,7 +11,7 @@ public class DesktopLauncher {
 
 	public static void main( String[] arg ) {
 
-		if ( Vars.remakeHexas ) {
+		if ( Vars.remakePacks ) {
 
 			Settings param = new Settings();
 			param.duplicatePadding = true;
@@ -20,8 +20,11 @@ public class DesktopLauncher {
 			param.limitMemory = false;
 			param.edgePadding = true;
 
-			TexturePacker.process(param, "/home/nemo9955/CodeStation/proiecteJava/StartingFire/android/assets/hexas",//
-					"/home/nemo9955/CodeStation/proiecteJava/StartingFire/android/assets/img", "hexaset");
+			TexturePacker.process(param, "/home/nemo9955/CodeStation/SF materials/hexas",
+						"/home/nemo9955/CodeStation/proiecteJava/StartingFire/android/assets/img", "hexaset");
+
+			TexturePacker.process(param, "/home/nemo9955/CodeStation/SF materials/menu",
+						"/home/nemo9955/CodeStation/proiecteJava/StartingFire/android/assets/img", "skinset");
 		}
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new StartingFire(), config);
