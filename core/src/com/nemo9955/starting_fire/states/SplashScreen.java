@@ -2,6 +2,7 @@ package com.nemo9955.starting_fire.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.nemo9955.starting_fire.storage.Assets;
 import com.nemo9955.starting_fire.storage.SF;
@@ -34,6 +35,7 @@ public class SplashScreen extends ScreenAdapter {
 
 		// Gdx.app.log("life", "leave splash screen");
 
+		SF.atlas = Assets.HEXAS.asset(TextureAtlas.class);
 		SF.skin = Assets.SKIN_JSON.asset(Skin.class);
 		SF.mainMenu = new MainMenu();
 		SF.gameplay = new Gameplay();

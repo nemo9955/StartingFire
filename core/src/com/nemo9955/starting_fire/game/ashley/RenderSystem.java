@@ -36,12 +36,11 @@ public class RenderSystem extends IteratingSystem {
 		CAnimation anim = ca.get(entity);
 		if ( tex != null ) {
 			for (TextureRegion texture : tex.tex)
-				SF.spritesBatch.draw(texture, po.x, po.y, texture.getRegionWidth() * wo.world.scaling, texture.getRegionHeight()
-							* wo.world.scaling);
+				SF.spritesBatch.draw(texture, po.x, po.y, texture.getRegionWidth(), texture.getRegionHeight());
 		}
 		if ( anim != null ) {
 			TextureRegion draw = anim.anim.getKeyFrame(wo.world.stateTime, true);
-			SF.spritesBatch.draw(draw, po.x, po.y, draw.getRegionWidth() * wo.world.scaling, draw.getRegionHeight() * wo.world.scaling);
+			SF.spritesBatch.draw(draw, po.x, po.y, draw.getRegionWidth(), draw.getRegionHeight());
 		}
 
 	}

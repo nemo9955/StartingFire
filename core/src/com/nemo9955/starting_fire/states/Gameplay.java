@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nemo9955.starting_fire.game.GamePlayStage;
 import com.nemo9955.starting_fire.game.world.HexWorld;
 import com.nemo9955.starting_fire.storage.SF;
@@ -15,6 +16,7 @@ public class Gameplay extends ScreenAdapter {
 	private HexWorld			world;
 
 	private OrthographicCamera	camera;
+	private ScreenViewport		viewport;
 	private OrthoCamController	cameraController;
 
 	private GamePlayStage		stage;
@@ -23,6 +25,8 @@ public class Gameplay extends ScreenAdapter {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false);
 		camera.update();
+		viewport = new ScreenViewport(camera);
+		viewport.setUnitsPerPixel(1.6f);
 
 		stage = new GamePlayStage();
 
@@ -34,6 +38,7 @@ public class Gameplay extends ScreenAdapter {
 		Gdx.input.setInputProcessor(new InputMultiplexer(stage, cameraController));
 		stage.restart();
 		world = new HexWorld(4, 4, 127, 82);
+		camera.position.setZero();
 	}
 
 	@Override
@@ -53,8 +58,7 @@ public class Gameplay extends ScreenAdapter {
 	@Override
 	public void resize( int width, int height ) {
 		stage.resize(width, height);
-		camera.setToOrtho(false, width, height);
-		camera.update();
+		viewport.update(width, height);
 	}
 
 	@Override

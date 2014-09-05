@@ -26,7 +26,15 @@ public class DesktopLauncher {
 			TexturePacker.process(param, "/home/nemo9955/CodeStation/SF materials/menu",
 						"/home/nemo9955/CodeStation/proiecteJava/StartingFire/android/assets/img", "skinset");
 		}
+
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.width = 720;
+		config.height = 480;
+		config.backgroundFPS = 30;
+		config.foregroundFPS = 0;
+		config.vSyncEnabled = false;
+		config.title = "Starting Fire - Development";
+
 		new LwjglApplication(new StartingFire(), config);
 	}
 }
