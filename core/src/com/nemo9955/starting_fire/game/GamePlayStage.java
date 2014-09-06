@@ -1,22 +1,41 @@
 package com.nemo9955.starting_fire.game;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nemo9955.starting_fire.storage.SF;
 
 public class GamePlayStage extends Stage {
 
-	Group		hudHolder	= new Group();
-	ImageButton	hudMenuBut	= new ImageButton(SF.skin, "IGpause");
-	ImageButton	hudCenter	= new ImageButton(SF.skin, "vCenter_small");
+	private Group	currentGroup;
 
-	Table		menuHolder	= new Table(SF.skin);
-	TextButton	menuResume	= new TextButton("Resume", SF.skin);
-	TextButton	menuMMenu	= new TextButton("Main Menu", SF.skin);
+	ImageButton		hudMenuBut	= new ImageButton(SF.skin, "IGpause");
+	ImageButton		hudCenter	= new ImageButton(SF.skin, "vCenter_small");
+	public Group	hudHolder	= new Group() {
+
+									@Override
+									public void setVisible( boolean visible ) {
+										super.setVisible(visible);
+										if ( visible ) {
+											SF.gameplay.inputs.addProcessor(SF.gameplay.cameraController);
+											SF.gameplay.inputs.addProcessor(SF.gameplay);
+										}
+										else {
+											SF.gameplay.inputs.removeProcessor(SF.gameplay.cameraController);
+											SF.gameplay.inputs.removeProcessor(SF.gameplay);
+										}
+
+									}
+								};
+
+	TextButton		menuResume	= new TextButton("Resume", SF.skin);
+	TextButton		menuMMenu	= new TextButton("Main Menu", SF.skin);
+	public Table	menuHolder	= new Table(SF.skin);
 
 	public GamePlayStage() {
 		super(new ScreenViewport(), SF.spritesBatch);
@@ -27,15 +46,6 @@ public class GamePlayStage extends Stage {
 		creadeMenu();
 	}
 
-	private void creadeMenu() {
-		menuHolder.defaults().pad(20);
-		menuHolder.add("Paused");
-		menuHolder.add(menuResume);
-		menuHolder.add(menuMMenu);
-
-		addActor(menuHolder);
-	}
-
 	private void createHUD() {
 		hudHolder.addActor(hudMenuBut);
 		// TextureRegion vCen = Assets.ELEMENTS_PACK.asset(TextureAtlas.class).findRegion("vCenter", 0);
@@ -43,10 +53,50 @@ public class GamePlayStage extends Stage {
 		// hudCenter.set
 		hudHolder.addActor(hudCenter);
 
+		hudHolder.addListener(hudListener);
 		addActor(hudHolder);
 	}
 
+	ChangeListener	hudListener	= new ChangeListener() {
+
+									@Override
+									public void changed( ChangeEvent event, Actor actor ) {
+										if ( hudMenuBut.isPressed() ) {
+											changeGroup(menuHolder);
+										} else if ( hudCenter.isPressed() ) {
+
+										}
+
+									}
+								};
+
+	private void creadeMenu() {
+		menuHolder.setFillParent(true);
+		menuHolder.setBackground("pix30");
+		menuHolder.defaults().pad(20);
+		menuHolder.add("Paused").row();
+		menuHolder.add(menuResume).row();
+		menuHolder.add(menuMMenu).row();
+
+		menuHolder.addListener(menuListener);
+		addActor(menuHolder);
+	}
+
+	ChangeListener	menuListener	= new ChangeListener() {
+
+										@Override
+										public void changed( ChangeEvent event, Actor actor ) {
+											if ( menuResume.isPressed() ) {
+												changeGroup(hudHolder);
+											} else if ( menuMMenu.isPressed() ) {
+
+											}
+
+										}
+									};
+
 	public void restart() {
+		currentGroup = hudHolder;
 		hudHolder.setVisible(true);
 		menuHolder.setVisible(false);
 	}
@@ -61,6 +111,12 @@ public class GamePlayStage extends Stage {
 		getViewport().update(width, height, true);
 		hudMenuBut.setPosition(getWidth() - hudMenuBut.getWidth(), getHeight() - hudMenuBut.getHeight());
 		hudCenter.setPosition(getWidth() * 0.1f, getHeight() - hudCenter.getHeight());
+	}
+
+	public void changeGroup( Group newGroup ) {
+		currentGroup.setVisible(false);
+		currentGroup = newGroup;
+		currentGroup.setVisible(true);
 	}
 
 	@Override
