@@ -1,12 +1,6 @@
-package com.nemo9955.starting_fire.storage;
+package com.nemo9955.starting_fire.game.ashley.components;
 
 import com.badlogic.ashley.core.ComponentMapper;
-import com.nemo9955.starting_fire.game.ashley.components.CAnimation;
-import com.nemo9955.starting_fire.game.ashley.components.CCollision;
-import com.nemo9955.starting_fire.game.ashley.components.CCoordinate;
-import com.nemo9955.starting_fire.game.ashley.components.CPosition;
-import com.nemo9955.starting_fire.game.ashley.components.CTexture;
-import com.nemo9955.starting_fire.game.ashley.components.CWorld;
 
 public class CM {
 
@@ -16,4 +10,5 @@ public class CM {
 	public static ComponentMapper<CWorld>		Wor		= ComponentMapper.getFor(CWorld.class);
 	public static ComponentMapper<CCollision>	Col		= ComponentMapper.getFor(CCollision.class);
 	public static ComponentMapper<CCoordinate>	Coor	= ComponentMapper.getFor(CCoordinate.class);
+	public static ComponentMapper<CActor>		Act		= ComponentMapper.getFor(CActor.class);
 }

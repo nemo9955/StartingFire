@@ -10,19 +10,19 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nemo9955.starting_fire.game.GamePlayStage;
-import com.nemo9955.starting_fire.game.world.HexWorld;
+import com.nemo9955.starting_fire.game.world.World;
 import com.nemo9955.starting_fire.storage.SF;
 import com.nemo9955.starting_fire.utils.OrthoCamController;
 
 public class Gameplay extends InputAdapter implements Screen {
 
-	private GamePlayStage		stage;
+	public GamePlayStage		stage;
 
-	private HexWorld			world;
+	private World				world;
 
-	private OrthographicCamera	camera;
+	public OrthographicCamera	camera;
 	private ScreenViewport		viewport;
-	public OrthoCamController	cameraController;
+	private OrthoCamController	cameraController;
 
 	public InputMultiplexer		inputs	= new InputMultiplexer();
 
@@ -36,14 +36,16 @@ public class Gameplay extends InputAdapter implements Screen {
 		stage = new GamePlayStage();
 
 		cameraController = new OrthoCamController(camera);
+		inputs.addProcessor(stage);
+		inputs.addProcessor(cameraController);
+		inputs.addProcessor(this);
 	}
 
 	@Override
 	public void show() {
-		inputs.addProcessor(stage);
 		Gdx.input.setInputProcessor(inputs);
 		stage.restart();
-		world = new HexWorld(10, 10, 127, 82);
+		world = new World(10, 10, 127, 82);
 		camera.position.setZero();
 	}
 

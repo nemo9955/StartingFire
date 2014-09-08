@@ -7,10 +7,10 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.nemo9955.starting_fire.game.ashley.components.CAnimation;
 import com.nemo9955.starting_fire.game.ashley.components.CCollision;
+import com.nemo9955.starting_fire.game.ashley.components.CM;
 import com.nemo9955.starting_fire.game.ashley.components.CPosition;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
 import com.nemo9955.starting_fire.game.ashley.components.CWorld;
-import com.nemo9955.starting_fire.storage.CM;
 import com.nemo9955.starting_fire.storage.SF;
 
 public class RenderSystem extends IteratingSystem {

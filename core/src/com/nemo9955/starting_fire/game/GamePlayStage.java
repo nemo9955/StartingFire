@@ -1,5 +1,6 @@
 package com.nemo9955.starting_fire.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -9,33 +10,32 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nemo9955.starting_fire.storage.SF;
+import com.nemo9955.starting_fire.utils.CircularGroup;
 
 public class GamePlayStage extends Stage {
 
-	private Group	currentGroup;
+	private Group			currentGroup;
 
-	ImageButton		hudMenuBut	= new ImageButton(SF.skin, "IGpause");
-	ImageButton		hudCenter	= new ImageButton(SF.skin, "vCenter_small");
-	public Group	hudHolder	= new Group() {
+	ImageButton				hudMenuBut	= new ImageButton(SF.skin, "IGpause");
+	ImageButton				hudCenter	= new ImageButton(SF.skin, "vCenter_small");
+	public Group			hudHolder	= new Group() {
 
-									@Override
-									public void setVisible( boolean visible ) {
-										super.setVisible(visible);
-										if ( visible ) {
-											SF.gameplay.inputs.addProcessor(SF.gameplay.cameraController);
-											SF.gameplay.inputs.addProcessor(SF.gameplay);
-										}
-										else {
-											SF.gameplay.inputs.removeProcessor(SF.gameplay.cameraController);
-											SF.gameplay.inputs.removeProcessor(SF.gameplay);
-										}
+											@Override
+											public void setVisible( boolean visible ) {
+												super.setVisible(visible);
+												if ( visible )
+													Gdx.input.setInputProcessor(SF.gameplay.inputs);
+												else
+													Gdx.input.setInputProcessor(SF.gameplay.stage);
+											}
+										};
 
-									}
-								};
+	TextButton				menuResume	= new TextButton("Resume", SF.skin);
+	TextButton				menuMMenu	= new TextButton("Main Menu", SF.skin);
+	public Table			menuHolder	= new Table(SF.skin);
 
-	TextButton		menuResume	= new TextButton("Resume", SF.skin);
-	TextButton		menuMMenu	= new TextButton("Main Menu", SF.skin);
-	public Table	menuHolder	= new Table(SF.skin);
+	public Group			entHolder	= new Group();
+	public CircularGroup	entFire		= new CircularGroup(SF.shapeRend);
 
 	public GamePlayStage() {
 		super(new ScreenViewport(), SF.spritesBatch);
@@ -44,6 +44,8 @@ public class GamePlayStage extends Stage {
 		createHUD();
 
 		creadeMenu();
+
+		createEnt();
 	}
 
 	private void createHUD() {
@@ -82,6 +84,17 @@ public class GamePlayStage extends Stage {
 		addActor(menuHolder);
 	}
 
+	private void createEnt() {
+		entFire.setDraggable(false);
+		entFire.setVisible(false);
+		entFire.addActor(new TextButton("Fire1", SF.skin));
+		entFire.addActor(new TextButton("Fire2", SF.skin));
+		entFire.addActor(new TextButton("Fire3", SF.skin));
+		entHolder.addActor(entFire);
+
+		addActor(entHolder);
+	}
+
 	ChangeListener	menuListener	= new ChangeListener() {
 
 										@Override
@@ -111,6 +124,12 @@ public class GamePlayStage extends Stage {
 		getViewport().update(width, height, true);
 		hudMenuBut.setPosition(getWidth() - hudMenuBut.getWidth(), getHeight() - hudMenuBut.getHeight());
 		hudCenter.setPosition(getWidth() * 0.1f, getHeight() - hudCenter.getHeight());
+
+		entFire.setAsCircle(100, 30);
+		entFire.setActivInterval(1, 0, false, 60, false);
+		entFire.setModifyAlpha(false);
+		// entFire.setPosition(200, 200);// TODO
+
 	}
 
 	public void changeGroup( Group newGroup ) {
