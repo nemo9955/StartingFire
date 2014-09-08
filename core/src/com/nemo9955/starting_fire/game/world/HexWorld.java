@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Disposable;
 import com.nemo9955.starting_fire.game.Hex;
 import com.nemo9955.starting_fire.game.ashley.PreSorter;
@@ -27,63 +28,150 @@ public class HexWorld implements Disposable {
 	public int				width, height, hexWidht, hexHeight;
 	public float			stateTime	= 0;
 
-	boolean					useHC		= true;
-
 	public HexWorld(int width, int height, int hexWidht, int hexHeight) {
 		this.width = width;
 		this.height = height;
 		this.hexWidht = hexWidht;
 		this.hexHeight = hexHeight;
 		eng.addSystem(new RenderSystem());
-		if ( useHC )
-			generateHoneyComb(10);
-		else
-			generateNewRandWorld();
 
+		generateNewWorldType();
+	}
+
+	public void generateNewWorldType() {
+		eng.removeAllEntities();
+
+		switch ( 2 ) {
+			case 0 :
+				generateHoneyComb(10);
+				break;
+			case 1 :
+				generateNewRandWorld();
+				break;
+			case 2 :
+				generateNoiseWorld();
+				break;
+		}
+	}
+
+	private void generateNoiseWorld() {
+		float chanceAllive = 0.4f;
+		int birthLimit = 5;
+		int deathLimit = 4;
+		int steps = 3;
+
+		boolean[][] map = new boolean[width][height];
+		for (int i = 0; i < map.length; i++)
+			for (int j = 0; j < map[0].length; j++)
+				map[i][j] = MathUtils.randomBoolean(chanceAllive) ? true : false;
+
+		for (int step = 0; step < steps; step++) {
+			boolean[][] temp = new boolean[width][height];
+			for (int x = 0; x < map.length; x++) {
+				for (int y = 0; y < map[0].length; y++) {
+					int nbs = countAliveNeighbours(map, x, y);
+					if ( map[x][y] ) {
+						if ( nbs < deathLimit )
+							temp[x][y] = false;
+						else
+							temp[x][y] = true;
+					}
+					else {
+						if ( nbs > birthLimit )
+							temp[x][y] = true;
+						else
+							temp[x][y] = false;
+					}
+				}
+			}
+			map = temp;
+		}
+
+		PreSorter.begin();
+		for (int i = 0; i < map.length; i++)
+			for (int j = 0; j < map[0].length; j++)
+				if ( map[i][j] )
+					PreSorter.add(makeRandCell(Hex.GRASS, i, j, true));
+				else if ( MathUtils.randomBoolean(0.8f) )
+					PreSorter.add(makeRandCell(Hex.DIRT, i, j, true));
+				else
+					PreSorter.add(makeRandCell(Hex.GRAVEL, i, j, true));
+
+		PreSorter.end(eng);
+
+	}
+
+	private int countAliveNeighbours( boolean[][] map, int x, int y ) {
+		int count = 0;
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				int neighbour_x = x + i;
+				int neighbour_y = y + j;
+				if ( i == 0 && j == 0 ) {
+				}
+				else if ( neighbour_x < 0 || neighbour_y < 0 || neighbour_x >= map.length || neighbour_y >= map[0].length ) {
+					count = count + 1;
+				}
+				else if ( map[neighbour_x][neighbour_y] ) {
+					count = count + 1;
+				}
+			}
+		}
+		return count;
 	}
 
 	private void generateNewRandWorld() {
 		PreSorter.begin();
 		for (int col = 0; col < height; col++)
-			for (int row = width - 1; row > -1; row--) {
-				PreSorter.add(makeRandCell(col, row));
-			}
+			for (int row = width - 1; row > -1; row--)
+				PreSorter.add(makeRandCell(col, row, false));
 		PreSorter.end(eng);
 	}
 
 	private void generateHoneyComb( int radius ) {
 		PreSorter.begin();
-		PreSorter.add(makeRandCell(0, 0));
+		PreSorter.add(makeRandCell(0, 0, false));
 		for (int r = 0; r > -radius; r--)
 			for (int q = -r - 1; q > -radius - r; q--)
-				PreSorter.add(makeRandCell(q, r));
+				PreSorter.add(makeRandCell(q, r, false));
 		for (int r = 1; r < radius; r++)
 			for (int q = 0; q > -radius; q--)
-				PreSorter.add(makeRandCell(q, r));
+				PreSorter.add(makeRandCell(q, r, false));
 		for (int q = 1; q < radius; q++)
 			for (int r = -q; r < radius - q; r++)
-				PreSorter.add(makeRandCell(q, r));
+				PreSorter.add(makeRandCell(q, r, false));
 		PreSorter.end(eng);
 	}
 
-	private Entity makeRandCell( int q, int r ) {
+	private Entity makeRandCell( int q, int r, boolean offset ) {
+		return makeRandCell(Hex.GRASS, q, r, offset);
+	}
+
+	Animation	fireAnim	= new Animation(0.1f, SF.atlas.findRegions("small_fire"), PlayMode.LOOP_PINGPONG);
+
+	private Entity makeRandCell( Hex hex, int q, int r, boolean offset ) {
 		Entity ent = createEntity();
 		addCoordinates(ent, q, r);
 
 		// if ( MathUtils.randomBoolean(0.75f) )
-		addTexture(ent, Hex.GRASS.getTex());
+		addTexture(ent, hex.getTex());
 		// else if ( MathUtils.randomBoolean(0.8f) )
 		// addTexture(ent, Hex.DIRT.getTex());
 		// else
 		// addTexture(ent, Hex.GRAVEL.getTex());
 
 		float x = hexWidht * 0.75f * q;
-		float y = -(hexHeight * 0.5f * (r * 2 + 1 + q));
+		float y;
+		if ( offset )
+			y = ((q & 1) == 1 ? hexHeight * 0.5f : 0) - (hexHeight * r);
+		else
+			y = -(hexHeight * 0.5f * (r * 2 + 1 + q));
+
 		addPosition(ent, x, y);
 		addCollision(ent, x, y, hexWidht, hexHeight);
 
 		if ( q == 0 && r == 0 )
-			addAnimation(ent, new Animation(0.1f, SF.atlas.findRegions("small_fire"), PlayMode.LOOP_PINGPONG));
+			addAnimation(ent, fireAnim);
 
 		return ent;
 	}

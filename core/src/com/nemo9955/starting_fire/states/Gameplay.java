@@ -31,7 +31,7 @@ public class Gameplay extends InputAdapter implements Screen {
 		camera.setToOrtho(false);
 		camera.update();
 		viewport = new ScreenViewport(camera);
-		viewport.setUnitsPerPixel(1.9f);
+		viewport.setUnitsPerPixel(1.8f);
 
 		stage = new GamePlayStage();
 
@@ -43,7 +43,7 @@ public class Gameplay extends InputAdapter implements Screen {
 		inputs.addProcessor(stage);
 		Gdx.input.setInputProcessor(inputs);
 		stage.restart();
-		world = new HexWorld(4, 4, 127, 82);
+		world = new HexWorld(10, 10, 127, 82);
 		camera.position.setZero();
 	}
 
@@ -75,6 +75,18 @@ public class Gameplay extends InputAdapter implements Screen {
 		if ( button == 2 ) {
 			Ray ray = camera.getPickRay(screenX, screenY);
 			world.hit(ray.origin.x, ray.origin.y);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped( char character ) {
+		switch ( character ) {
+			case 'r' :
+				world.generateNewWorldType();
+				break;
+			default :
+				break;
 		}
 		return false;
 	}
