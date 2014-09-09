@@ -8,7 +8,10 @@ import com.nemo9955.starting_fire.game.ashley.components.CActor;
 import com.nemo9955.starting_fire.game.ashley.components.CAnimation;
 import com.nemo9955.starting_fire.game.ashley.components.CCollision;
 import com.nemo9955.starting_fire.game.ashley.components.CCoordinate;
-import com.nemo9955.starting_fire.game.ashley.components.CInteract;
+import com.nemo9955.starting_fire.game.ashley.components.CIHit;
+import com.nemo9955.starting_fire.game.ashley.components.CIHit.IHitable;
+import com.nemo9955.starting_fire.game.ashley.components.CIUpdate;
+import com.nemo9955.starting_fire.game.ashley.components.CIUpdate.IUpdatable;
 import com.nemo9955.starting_fire.game.ashley.components.CPosition;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
 import com.nemo9955.starting_fire.game.ashley.components.CWorld;
@@ -47,16 +50,16 @@ public class EntityManager {
 		addCollision(x, y, world.hexWidht, world.hexHeight);
 
 		if ( q == 0 && r == 0 )
-			FireFactory.useElement(this);
+			FireFactory.instance.useElement(this);
 
-		return entity;
+		return getEntity();
 	}
 
 	public EntityManager designEntity() {
-		entity = engine.createEntity();
+		setEntity(engine.createEntity());
 		CWorld cw = engine.createComponent(CWorld.class);
 		cw.world = world;
-		entity.add(cw);
+		getEntity().add(cw);
 		return this;
 	}
 
@@ -66,40 +69,47 @@ public class EntityManager {
 		return this;
 	}
 
-	public EntityManager addInteract( IInteractable interact ) {
-		CInteract inter = engine.createComponent(CInteract.class);
+	public EntityManager addInteract( IHitable interact ) {
+		CIHit inter = engine.createComponent(CIHit.class);
 		inter.interact = interact;
-		entity.add(inter);
+		getEntity().add(inter);
+		return this;
+	}
+
+	public EntityManager addUpdate( IUpdatable upd ) {
+		CIUpdate update = engine.createComponent(CIUpdate.class);
+		update.update = upd;
+		getEntity().add(update);
 		return this;
 	}
 
 	public EntityManager addActor( IActable actor ) {
 		CActor act = engine.createComponent(CActor.class);
 		act.actor = actor;
-		entity.add(act);
+		getEntity().add(act);
 		return this;
 	}
 
 	public EntityManager addAnimation( Animation animation ) {
 		CAnimation anim = engine.createComponent(CAnimation.class);
 		anim.anim = animation;
-		entity.add(anim);
+		getEntity().add(anim);
 		return this;
 	}
 
 	public EntityManager addCollision( float x, float y, float width, float height ) {
 		CCollision col = engine.createComponent(CCollision.class);
 		col.setColide(x, y, width, height);
-		entity.add(col);
+		getEntity().add(col);
 		return this;
 	}
 
 	public EntityManager addTexture( TextureRegion region ) {
-		CTexture tex = entity.getComponent(CTexture.class);
+		CTexture tex = getEntity().getComponent(CTexture.class);
 		if ( tex == null )
 			tex = engine.createComponent(CTexture.class);
 		tex.tex.add(region);
-		entity.add(tex);
+		getEntity().add(tex);
 		return this;
 	}
 
@@ -107,7 +117,7 @@ public class EntityManager {
 		CPosition poz = engine.createComponent(CPosition.class);
 		poz.x = x;
 		poz.y = y;
-		entity.add(poz);
+		getEntity().add(poz);
 		return this;
 	}
 
@@ -115,11 +125,16 @@ public class EntityManager {
 		CCoordinate coo = engine.createComponent(CCoordinate.class);
 		coo.r = r;
 		coo.q = q;
-		entity.add(coo);
+		getEntity().add(coo);
 		return this;
 	}
 
 	public Entity getEntity() {
 		return entity;
+	}
+
+	public EntityManager setEntity( Entity entity ) {
+		this.entity = entity;
+		return this;
 	}
 }

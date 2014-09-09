@@ -11,5 +11,6 @@ public class CM {
 	public static ComponentMapper<CCollision>	Col		= ComponentMapper.getFor(CCollision.class);
 	public static ComponentMapper<CCoordinate>	Coor	= ComponentMapper.getFor(CCoordinate.class);
 	public static ComponentMapper<CActor>		Act		= ComponentMapper.getFor(CActor.class);
-	public static ComponentMapper<CInteract>	Inter	= ComponentMapper.getFor(CInteract.class);
+	public static ComponentMapper<CIHit>		Inter	= ComponentMapper.getFor(CIHit.class);
+	public static ComponentMapper<CIUpdate>		Upd		= ComponentMapper.getFor(CIUpdate.class);
 }

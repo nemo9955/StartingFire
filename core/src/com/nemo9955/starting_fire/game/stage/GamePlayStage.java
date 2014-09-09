@@ -34,7 +34,7 @@ public class GamePlayStage extends Stage {
 	TextButton				menuMMenu	= new TextButton("Main Menu", SF.skin);
 	public Table			menuHolder	= new Table(SF.skin);
 
-	public Array<IActable>	entActors	= new Array<IActable>();
+	private Array<IActable>	entActors	= new Array<IActable>();
 
 	public GamePlayStage() {
 		super(new ScreenViewport(), SF.spritesBatch);
@@ -126,6 +126,11 @@ public class GamePlayStage extends Stage {
 	@Override
 	public void dispose() {
 		super.dispose();;
+	}
+
+	public void addEntActor( IActable act ) {
+		entActors.add(act);
+		addActor(act.getActor());
 	}
 
 }

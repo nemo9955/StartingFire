@@ -9,8 +9,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.nemo9955.starting_fire.game.ashley.EntityManager;
 import com.nemo9955.starting_fire.game.ashley.RenderSystem;
+import com.nemo9955.starting_fire.game.ashley.UpdateSystem;
 import com.nemo9955.starting_fire.game.ashley.components.CCollision;
-import com.nemo9955.starting_fire.game.ashley.components.CInteract;
+import com.nemo9955.starting_fire.game.ashley.components.CIHit;
 import com.nemo9955.starting_fire.game.ashley.components.CM;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
 import com.nemo9955.starting_fire.game.world.WorldGenerator.GenType;
@@ -18,10 +19,10 @@ import com.nemo9955.starting_fire.storage.SF;
 
 public class World implements Disposable {
 
-	PooledEngine	eng			= new PooledEngine();
-	EntityManager	manager		= new EntityManager(eng, this);
-	public int		width, height, hexWidht, hexHeight;
-	public float	stateTime	= 0;
+	PooledEngine			eng			= new PooledEngine();
+	public EntityManager	manager		= new EntityManager(eng, this);
+	public int				width, height, hexWidht, hexHeight;
+	public float			stateTime	= 0;
 
 	public World(int width, int height, int hexWidht, int hexHeight) {
 		this.width = width;
@@ -29,6 +30,7 @@ public class World implements Disposable {
 		this.hexWidht = hexWidht;
 		this.hexHeight = hexHeight;
 		eng.addSystem(new RenderSystem());
+		eng.addSystem(new UpdateSystem());
 
 		generateNewWorldType();
 	}
@@ -68,18 +70,20 @@ public class World implements Disposable {
 		for (int i = 0; i < ents.size(); i++) {
 			CCollision col = CM.Col.get(ents.get(i));
 			if ( col.isInside(x, y) ) {
-				CTexture tex = CM.Tex.get(ents.get(i));
-				if ( tex != null ) {
-					AtlasRegion hili = SF.atlas.findRegion("tile_highlight");
-					if ( tex.tex.contains(hili, true) )
-						tex.tex.removeValue(hili, true);
-					else
-						tex.tex.add(hili);
 
-				}
-				CInteract inter = CM.Inter.get(ents.get(i));
+				CIHit inter = CM.Inter.get(ents.get(i));
 				if ( inter != null )
 					inter.interact.hit(ents.get(i));
+				else {
+					CTexture tex = CM.Tex.get(ents.get(i));
+					if ( tex != null ) {
+						AtlasRegion hili = SF.atlas.findRegion("tile_highlight");
+						if ( tex.tex.contains(hili, true) )
+							tex.tex.removeValue(hili, true);
+						else
+							tex.tex.add(hili);
+					}
+				}
 
 				break;
 			}
