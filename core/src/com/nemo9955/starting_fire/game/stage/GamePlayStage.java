@@ -1,4 +1,4 @@
-package com.nemo9955.starting_fire.game;
+package com.nemo9955.starting_fire.game.stage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nemo9955.starting_fire.storage.SF;
-import com.nemo9955.starting_fire.utils.CircularGroup;
 
 public class GamePlayStage extends Stage {
 
@@ -34,8 +34,7 @@ public class GamePlayStage extends Stage {
 	TextButton				menuMMenu	= new TextButton("Main Menu", SF.skin);
 	public Table			menuHolder	= new Table(SF.skin);
 
-	public Group			entHolder	= new Group();
-	public CircularGroup	entFire		= new CircularGroup(SF.shapeRend);
+	public Array<IActable>	entActors	= new Array<IActable>();
 
 	public GamePlayStage() {
 		super(new ScreenViewport(), SF.spritesBatch);
@@ -44,8 +43,6 @@ public class GamePlayStage extends Stage {
 		createHUD();
 
 		creadeMenu();
-
-		createEnt();
 	}
 
 	private void createHUD() {
@@ -66,7 +63,7 @@ public class GamePlayStage extends Stage {
 										if ( hudMenuBut.isPressed() ) {
 											changeGroup(menuHolder);
 										} else if ( hudCenter.isPressed() ) {
-
+											SF.gameplay.camera.position.setZero();
 										}
 
 									}
@@ -82,17 +79,6 @@ public class GamePlayStage extends Stage {
 
 		menuHolder.addListener(menuListener);
 		addActor(menuHolder);
-	}
-
-	private void createEnt() {
-		entFire.setDraggable(false);
-		entFire.setVisible(false);
-		entFire.addActor(new TextButton("Fire1", SF.skin));
-		entFire.addActor(new TextButton("Fire2", SF.skin));
-		entFire.addActor(new TextButton("Fire3", SF.skin));
-		entHolder.addActor(entFire);
-
-		addActor(entHolder);
 	}
 
 	ChangeListener	menuListener	= new ChangeListener() {
@@ -112,11 +98,8 @@ public class GamePlayStage extends Stage {
 		currentGroup = hudHolder;
 		hudHolder.setVisible(true);
 		menuHolder.setVisible(false);
-	}
-
-	public void manage( float delta ) {
-		act();
-		draw();
+		for (IActable act : entActors)
+			act.restart();;
 	}
 
 	public void resize( int width, int height ) {
@@ -125,17 +108,19 @@ public class GamePlayStage extends Stage {
 		hudMenuBut.setPosition(getWidth() - hudMenuBut.getWidth(), getHeight() - hudMenuBut.getHeight());
 		hudCenter.setPosition(getWidth() * 0.1f, getHeight() - hudCenter.getHeight());
 
-		entFire.setAsCircle(100, 30);
-		entFire.setActivInterval(1, 0, false, 60, false);
-		entFire.setModifyAlpha(false);
-		// entFire.setPosition(200, 200);// TODO
-
+		for (IActable act : entActors)
+			act.resize(width, height);
 	}
 
 	public void changeGroup( Group newGroup ) {
 		currentGroup.setVisible(false);
 		currentGroup = newGroup;
 		currentGroup.setVisible(true);
+	}
+
+	public void manage( float delta ) {
+		act();
+		draw();
 	}
 
 	@Override

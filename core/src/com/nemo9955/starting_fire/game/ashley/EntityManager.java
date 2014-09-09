@@ -4,16 +4,17 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nemo9955.starting_fire.game.ashley.components.CActor;
 import com.nemo9955.starting_fire.game.ashley.components.CAnimation;
 import com.nemo9955.starting_fire.game.ashley.components.CCollision;
 import com.nemo9955.starting_fire.game.ashley.components.CCoordinate;
+import com.nemo9955.starting_fire.game.ashley.components.CInteract;
 import com.nemo9955.starting_fire.game.ashley.components.CPosition;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
 import com.nemo9955.starting_fire.game.ashley.components.CWorld;
+import com.nemo9955.starting_fire.game.stage.IActable;
+import com.nemo9955.starting_fire.game.tiles.FireFactory;
 import com.nemo9955.starting_fire.game.tiles.HexBase;
-import com.nemo9955.starting_fire.game.tiles.HexElements;
 import com.nemo9955.starting_fire.game.world.World;
 import com.nemo9955.starting_fire.storage.SF;
 
@@ -46,7 +47,7 @@ public class EntityManager {
 		addCollision(x, y, world.hexWidht, world.hexHeight);
 
 		if ( q == 0 && r == 0 )
-			HexElements.FIRE.useElement(this);
+			FireFactory.useElement(this);
 
 		return entity;
 	}
@@ -65,7 +66,14 @@ public class EntityManager {
 		return this;
 	}
 
-	public EntityManager addActor( Actor actor ) {
+	public EntityManager addInteract( IInteractable interact ) {
+		CInteract inter = engine.createComponent(CInteract.class);
+		inter.interact = interact;
+		entity.add(inter);
+		return this;
+	}
+
+	public EntityManager addActor( IActable actor ) {
 		CActor act = engine.createComponent(CActor.class);
 		act.actor = actor;
 		entity.add(act);
@@ -111,7 +119,7 @@ public class EntityManager {
 		return this;
 	}
 
-	public Entity createEntity() {
+	public Entity getEntity() {
 		return entity;
 	}
 }

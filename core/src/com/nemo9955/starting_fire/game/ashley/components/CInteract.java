@@ -2,15 +2,15 @@ package com.nemo9955.starting_fire.game.ashley.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool.Poolable;
-import com.nemo9955.starting_fire.game.stage.IActable;
+import com.nemo9955.starting_fire.game.ashley.IInteractable;
 
-public class CActor extends Component implements Poolable {
+public class CInteract extends Component implements Poolable {
 
-	public IActable	actor;
+	public IInteractable	interact;
 
 	@Override
 	public void reset() {
-		actor = null;
+		interact = null;
 	}
 
 }

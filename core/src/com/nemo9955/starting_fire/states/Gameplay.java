@@ -6,10 +6,9 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.nemo9955.starting_fire.game.GamePlayStage;
+import com.nemo9955.starting_fire.game.stage.GamePlayStage;
 import com.nemo9955.starting_fire.game.world.World;
 import com.nemo9955.starting_fire.storage.SF;
 import com.nemo9955.starting_fire.utils.OrthoCamController;
@@ -59,10 +58,10 @@ public class Gameplay extends InputAdapter implements Screen {
 		SF.spritesBatch.setProjectionMatrix(camera.combined);
 		SF.shapeRend.setProjectionMatrix(camera.combined);
 		SF.spritesBatch.begin();
-		SF.shapeRend.begin(ShapeType.Line);
+		// SF.shapeRend.begin(ShapeType.Line);
 		world.manage(delta);
 		SF.spritesBatch.end();
-		SF.shapeRend.end();
+		// SF.shapeRend.end();
 		stage.manage(delta);
 	}
 
@@ -109,4 +108,7 @@ public class Gameplay extends InputAdapter implements Screen {
 	@Override
 	public void resume() {}
 
+	public World getWorld() {
+		return world;
+	}
 }

@@ -9,10 +9,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.nemo9955.starting_fire.game.ashley.EntityManager;
 import com.nemo9955.starting_fire.game.ashley.RenderSystem;
-import com.nemo9955.starting_fire.game.ashley.components.CActor;
 import com.nemo9955.starting_fire.game.ashley.components.CCollision;
+import com.nemo9955.starting_fire.game.ashley.components.CInteract;
 import com.nemo9955.starting_fire.game.ashley.components.CM;
-import com.nemo9955.starting_fire.game.ashley.components.CPosition;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
 import com.nemo9955.starting_fire.game.world.WorldGenerator.GenType;
 import com.nemo9955.starting_fire.storage.SF;
@@ -78,13 +77,10 @@ public class World implements Disposable {
 						tex.tex.add(hili);
 
 				}
-				CActor act = CM.Act.get(ents.get(i));
-				if ( act != null ) {
-					CPosition poz = CM.Pos.get(ents.get(i));
-					SF.gameplay.camera.project(tHit.set(poz.x + hexWidht / 2, poz.y + hexHeight / 2, 0));
-					act.actor.setPosition(tHit.x, tHit.y);
-					act.actor.setVisible(!act.actor.isVisible());
-				}
+				CInteract inter = CM.Inter.get(ents.get(i));
+				if ( inter != null )
+					inter.interact.hit(ents.get(i));
+
 				break;
 			}
 		}
