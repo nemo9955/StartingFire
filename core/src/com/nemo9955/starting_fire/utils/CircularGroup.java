@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
+import com.nemo9955.starting_fire.storage.SF;
 
 public class CircularGroup extends WidgetGroup {
 
@@ -21,12 +22,24 @@ public class CircularGroup extends WidgetGroup {
 
 	private float					minAngle		= 0, maxAngle = 359;
 	private float					interval		= 20;
-	private boolean					rotKids			= false;
 
 	private boolean					clockwise		= true;
 	private float					mid, dir, lungimea;
 	private float					rotation		= 0;
 	private boolean					lockInside;
+
+	private InputListener			hideListener	= new InputListener() {
+
+														@Override
+														public boolean touchDown( InputEvent event, float x, float y, int pointer,
+																	int button ) {
+
+															float distCenter = SF.tmp.set(x, y).sub(center).dst2(0, 0);
+															if ( distCenter < (radius + stroke) * (radius + stroke) )
+																setVisible(false);
+															return false;
+														};
+													};
 
 	private InputListener			inputListener	= new InputListener() {
 
@@ -40,6 +53,7 @@ public class CircularGroup extends WidgetGroup {
 															inAngle = tmp2.set(x, y).sub(center).angle();
 															initianRot = rotation;
 															float distCenter = tmp2.dst2(0, 0);
+
 															if ( distCenter > radius * radius
 																		&& distCenter < (radius + stroke) * (radius + stroke) )
 																return true;
@@ -62,6 +76,13 @@ public class CircularGroup extends WidgetGroup {
 			addCaptureListener(inputListener);
 		else if ( getCaptureListeners().contains(inputListener, true) )
 			removeCaptureListener(inputListener);
+	}
+
+	public void setHideAtMiss( boolean hide ) {
+		if ( hide && !getCaptureListeners().contains(hideListener, true) )
+			addCaptureListener(hideListener);
+		else if ( getCaptureListeners().contains(hideListener, true) )
+			removeCaptureListener(hideListener);
 	}
 
 	@Override
@@ -99,11 +120,6 @@ public class CircularGroup extends WidgetGroup {
 		for (Actor actor : getChildren()) {
 			tmp1.set(getPositionbyAngle(tmp1, unghi));
 			actor.setPosition(tmp1.x - actor.getWidth() / 2, tmp1.y - actor.getHeight() / 2);
-
-			if ( rotKids ) {
-				actor.setOrigin(actor.getWidth() / 2, actor.getHeight() / 2);
-				actor.setRotation(unghi);
-			}
 
 			unghi += direction;
 		}
@@ -206,15 +222,6 @@ public class CircularGroup extends WidgetGroup {
 		this.radius = radius;
 		this.stroke = stroke;
 		setSize((radius + stroke) * 2, (radius + stroke) * 2);
-	}
-
-	/**
-	 * Whether to rotate the children according to their position or not .
-	 * 
-	 * @param rotChildern
-	 */
-	public void setRotateChildren( boolean rotChildern ) {
-		this.rotKids = rotChildern;
 	}
 
 	public int getRadius() {

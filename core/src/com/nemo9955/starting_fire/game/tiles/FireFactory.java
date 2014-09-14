@@ -5,16 +5,15 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.nemo9955.starting_fire.game.ashley.EntityManager;
 import com.nemo9955.starting_fire.game.ashley.components.CAnimation;
-import com.nemo9955.starting_fire.game.ashley.components.CIActor;
-import com.nemo9955.starting_fire.game.ashley.components.CIHit.IHitable;
+import com.nemo9955.starting_fire.game.ashley.components.CCoordinate;
 import com.nemo9955.starting_fire.game.ashley.components.CIUpdate;
 import com.nemo9955.starting_fire.game.ashley.components.CIUpdate.IUpdatable;
 import com.nemo9955.starting_fire.game.ashley.components.CM;
-import com.nemo9955.starting_fire.game.ashley.components.CPosition;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
 import com.nemo9955.starting_fire.game.ashley.components.CTimer;
 import com.nemo9955.starting_fire.game.ashley.components.CWorld;
@@ -31,14 +30,13 @@ public class FireFactory {
 
 	public static void useElement( EntityManager manager ) {
 
-		DefaultTileActor actor = new DefaultTileActor(manager.getEntity());
+		DefaultTileActor actor = new DefaultTileActor(manager);
 		actor.getGroup().addActor(entLightFire);
 		actor.getGroup().addActor(entMWorkB);
 		actor.getGroup().addListener(listener);
 		manager.addActor(actor);
 
 		manager.addTexture(fireUnlit);
-		manager.addHit(hit);
 		// manager.addUpdate(update);
 		// manager.addTelegraph(telegraph);TODO
 	}
@@ -74,33 +72,27 @@ public class FireFactory {
 
 													@Override
 													public void changed( ChangeEvent event, Actor act ) {
-														Entity entity = (Entity) act.getParent().getUserObject();
+														Group parent = act.getParent();
+														Entity entity = (Entity) parent.getUserObject();
 
 														if ( entLightFire.isPressed() )
 															lightFire(entity);
 														else if ( entMWorkB.isPressed() ) {
-															// TODO get sprite for workbench ,
+															CCoordinate co = CM.Coor.get(entity);
+															CWorld wo = CM.Wor.get(entity);
+
+															EntityManager manager = wo.world.manager;
+															manager.setEntity(wo.world.getHex(co.q + 2, co.r - 1));
+
+															WorckBFactory.useElement(manager);
+
+															parent.removeActor(entMWorkB);
 														}
 
-														CIActor actor = CM.Act.get(entity);
-														actor.actor.getGroup().setVisible(false);
+														// actor.actor.getGroup().setVisible(false);
 													}
 												};
-	private static IHitable			hit			= new IHitable() {
 
-													@Override
-													public void hit( Entity ent ) {
-														CIActor act = CM.Act.get(ent);
-														CPosition poz = CM.Pos.get(ent);
-														CWorld w = CM.Wor.get(ent);
-														SF.gameplay.camera.project(SF.tpC1.set(poz.x + w.world.hexWidht / 2, poz.y
-																	+ w.world.hexHeight / 2,
-																	0));
-														act.actor.getGroup().setPosition(SF.tpC1.x, SF.tpC1.y);
-														act.actor.getGroup().setVisible(!act.actor.getGroup().isVisible());
-
-													}
-												};
 	private static IUpdatable		update		= new IUpdatable() {
 
 													@Override

@@ -1,6 +1,5 @@
 package com.nemo9955.starting_fire.game.stage;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -24,10 +23,7 @@ public class GamePlayStage extends Stage {
 											@Override
 											public void setVisible( boolean visible ) {
 												super.setVisible(visible);
-												if ( visible )
-													Gdx.input.setInputProcessor(SF.gameplay.inputs);
-												else
-													Gdx.input.setInputProcessor(SF.gameplay.stage);
+												SF.gameplay.activateAllInputes(visible);
 											}
 										};
 
@@ -89,7 +85,7 @@ public class GamePlayStage extends Stage {
 											if ( menuResume.isPressed() ) {
 												changeGroup(hudHolder);
 											} else if ( menuMMenu.isPressed() ) {
-
+												SF.game.setScreen(SF.mc);
 											}
 
 										}

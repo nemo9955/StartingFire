@@ -2,8 +2,10 @@ package com.nemo9955.starting_fire.game.stage;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.nemo9955.starting_fire.game.ashley.EntityManager;
 import com.nemo9955.starting_fire.game.ashley.components.CIActor;
 import com.nemo9955.starting_fire.game.ashley.components.CIActor.IActable;
+import com.nemo9955.starting_fire.game.ashley.components.CIHit.IHitable;
 import com.nemo9955.starting_fire.game.ashley.components.CM;
 import com.nemo9955.starting_fire.game.ashley.components.CPosition;
 import com.nemo9955.starting_fire.game.ashley.components.CWorld;
@@ -14,15 +16,23 @@ public class DefaultTileActor implements IActable {
 
 	CircularGroup	actor;
 
-	public DefaultTileActor(Entity entity) {
-		actor = new CircularGroup(SF.shapeRend);
+	public DefaultTileActor(EntityManager manager) {
+		manager.addHit(hit);
+		actor = new CircularGroup(SF.shapeRend) {
 
-		actor.setUserObject(entity);
-		actor.setDraggable(false);
+			@Override
+			public void setVisible( boolean visible ) {
+				super.setVisible(visible);
+				SF.gameplay.activateAllInputes(!visible);
+			}
+		};
+
+		actor.setUserObject(manager.getEntity());
 		actor.setVisible(false);
+		actor.setHideAtMiss(true);
 
 		actor.setAsCircle(100, 30);
-		actor.setActivInterval(180, 0, !true, 60, false);
+		actor.setActivInterval(90, 270, true, 40, false);
 
 		SF.gameplay.stage.addEntActor(this);
 	}
@@ -48,4 +58,19 @@ public class DefaultTileActor implements IActable {
 		return actor;
 	}
 
+	private static IHitable	hit	= new IHitable() {
+
+									@Override
+									public void hit( Entity ent ) {
+										CIActor act = CM.Act.get(ent);
+										CPosition poz = CM.Pos.get(ent);
+										CWorld w = CM.Wor.get(ent);
+										SF.gameplay.camera.project(SF.tpC1.set(poz.x + w.world.hexWidht / 2, poz.y
+													+ w.world.hexHeight / 2,
+													0));
+										act.actor.getGroup().setPosition(SF.tpC1.x, SF.tpC1.y);
+										act.actor.getGroup().setVisible(!act.actor.getGroup().isVisible());
+
+									}
+								};
 }

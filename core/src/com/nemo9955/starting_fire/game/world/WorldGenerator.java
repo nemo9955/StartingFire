@@ -6,7 +6,7 @@ import com.nemo9955.starting_fire.game.tiles.HexBase;
 
 public class WorldGenerator {
 
-	private static World	w;
+	private static World	world;
 
 	static void generateNoiseWorld() {
 		float chanceAllive = 0.4f;
@@ -14,13 +14,13 @@ public class WorldGenerator {
 		int deathLimit = 4;
 		int steps = 1;
 
-		boolean[][] map = new boolean[w.width][w.height];
+		boolean[][] map = new boolean[world.width][world.height];
 		for (int i = 0; i < map.length; i++)
 			for (int j = 0; j < map[0].length; j++)
 				map[i][j] = MathUtils.randomBoolean(chanceAllive) ? true : false;
 
 		for (int step = 0; step < steps; step++) {
-			boolean[][] temp = new boolean[w.width][w.height];
+			boolean[][] temp = new boolean[world.width][world.height];
 			for (int x = 0; x < map.length; x++) {
 				for (int y = 0; y < map[0].length; y++) {
 					int nbs = countAliveNeighbours(map, x, y);
@@ -45,13 +45,13 @@ public class WorldGenerator {
 		for (int i = 0; i < map.length; i++)
 			for (int j = 0; j < map[0].length; j++)
 				if ( map[i][j] )
-					PreSorter.add(w.manager.makeTile(HexBase.GRASS, i, j, true));
+					PreSorter.add(world.manager.makeHex(HexBase.GRASS, i, j));
 				else if ( MathUtils.randomBoolean(0.8f) )
-					PreSorter.add(w.manager.makeTile(HexBase.DIRT, i, j, true));
+					PreSorter.add(world.manager.makeHex(HexBase.DIRT, i, j));
 				else
-					PreSorter.add(w.manager.makeTile(HexBase.GRAVEL, i, j, true));
+					PreSorter.add(world.manager.makeHex(HexBase.GRAVEL, i, j));
 
-		PreSorter.end(w.eng);
+		PreSorter.end(world.engine);
 
 	}
 
@@ -76,29 +76,30 @@ public class WorldGenerator {
 
 	static void generateNewRandWorld() {
 		PreSorter.begin();
-		for (int col = 0; col < w.height; col++)
-			for (int row = w.width - 1; row > -1; row--)
-				PreSorter.add(w.manager.makeTile(HexBase.GRASS, col, row, false));
-		PreSorter.end(w.eng);
+		for (int col = 0; col < world.height; col++)
+			for (int row = world.width - 1; row > -1; row--)
+				PreSorter.add(world.manager.makeHex(HexBase.GRASS, col, row));
+		PreSorter.end(world.engine);
 	}
 
 	static void generateHoneyComb( int radius ) {
+		world.offsetPlace = false;
 		PreSorter.begin();
-		PreSorter.add(w.manager.makeTile(HexBase.GRASS, 0, 0, false));
+		PreSorter.add(world.manager.makeHex(HexBase.GRASS, 0, 0));
 		for (int r = 0; r > -radius; r--)
 			for (int q = -r - 1; q > -radius - r; q--)
-				PreSorter.add(w.manager.makeTile(HexBase.GRASS, q, r, false));
+				PreSorter.add(world.manager.makeHex(HexBase.GRASS, q, r));
 		for (int r = 1; r < radius; r++)
 			for (int q = 0; q > -radius; q--)
-				PreSorter.add(w.manager.makeTile(HexBase.GRASS, q, r, false));
+				PreSorter.add(world.manager.makeHex(HexBase.GRASS, q, r));
 		for (int q = 1; q < radius; q++)
 			for (int r = -q; r < radius - q; r++)
-				PreSorter.add(w.manager.makeTile(HexBase.GRASS, q, r, false));
-		PreSorter.end(w.eng);
+				PreSorter.add(world.manager.makeHex(HexBase.GRASS, q, r));
+		PreSorter.end(world.engine);
 	}
 
 	static void genWorld( World world, GenType type ) {
-		w = world;
+		WorldGenerator.world = world;
 
 		switch ( type ) {
 			case HoneyComb :
@@ -111,7 +112,7 @@ public class WorldGenerator {
 				generateNoiseWorld();
 				break;
 		}
-		w = null;
+		world = null;
 	}
 
 	public static enum GenType {

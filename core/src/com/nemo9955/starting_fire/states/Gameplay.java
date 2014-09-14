@@ -44,7 +44,7 @@ public class Gameplay extends InputAdapter implements Screen {
 	public void show() {
 		Gdx.input.setInputProcessor(inputs);
 		stage.restart();
-		world = new World(10, 10, 127, 82);
+		world = new World(15, 13, 127, 82);
 		camera.position.setZero();
 	}
 
@@ -110,5 +110,13 @@ public class Gameplay extends InputAdapter implements Screen {
 
 	public World getWorld() {
 		return world;
+	}
+
+	public void activateAllInputes( boolean allInputs ) {
+		if ( allInputs )
+			Gdx.input.setInputProcessor(SF.gameplay.inputs);
+		else
+			Gdx.input.setInputProcessor(SF.gameplay.stage);
+
 	}
 }
