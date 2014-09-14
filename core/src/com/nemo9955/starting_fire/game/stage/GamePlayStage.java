@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.nemo9955.starting_fire.game.ashley.components.CIActor.IActable;
 import com.nemo9955.starting_fire.storage.SF;
 
 public class GamePlayStage extends Stage {
@@ -125,12 +126,12 @@ public class GamePlayStage extends Stage {
 
 	@Override
 	public void dispose() {
-		super.dispose();;
+		super.dispose();
 	}
 
 	public void addEntActor( IActable act ) {
 		entActors.add(act);
-		addActor(act.getActor());
+		addActor(act.getGroup());
 	}
 
 }

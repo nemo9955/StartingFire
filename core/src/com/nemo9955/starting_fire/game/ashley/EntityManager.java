@@ -2,20 +2,23 @@ package com.nemo9955.starting_fire.game.ashley;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.nemo9955.starting_fire.game.ashley.components.CActor;
 import com.nemo9955.starting_fire.game.ashley.components.CAnimation;
 import com.nemo9955.starting_fire.game.ashley.components.CCollision;
 import com.nemo9955.starting_fire.game.ashley.components.CCoordinate;
+import com.nemo9955.starting_fire.game.ashley.components.CIActor;
+import com.nemo9955.starting_fire.game.ashley.components.CIActor.IActable;
 import com.nemo9955.starting_fire.game.ashley.components.CIHit;
 import com.nemo9955.starting_fire.game.ashley.components.CIHit.IHitable;
 import com.nemo9955.starting_fire.game.ashley.components.CIUpdate;
 import com.nemo9955.starting_fire.game.ashley.components.CIUpdate.IUpdatable;
 import com.nemo9955.starting_fire.game.ashley.components.CPosition;
+import com.nemo9955.starting_fire.game.ashley.components.CTelegraph;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
+import com.nemo9955.starting_fire.game.ashley.components.CTimer;
 import com.nemo9955.starting_fire.game.ashley.components.CWorld;
-import com.nemo9955.starting_fire.game.stage.IActable;
 import com.nemo9955.starting_fire.game.tiles.FireFactory;
 import com.nemo9955.starting_fire.game.tiles.HexBase;
 import com.nemo9955.starting_fire.game.world.World;
@@ -50,7 +53,7 @@ public class EntityManager {
 		addCollision(x, y, world.hexWidht, world.hexHeight);
 
 		if ( q == 0 && r == 0 )
-			FireFactory.instance.useElement(this);
+			FireFactory.useElement(this);
 
 		return getEntity();
 	}
@@ -69,7 +72,21 @@ public class EntityManager {
 		return this;
 	}
 
-	public EntityManager addInteract( IHitable interact ) {
+	public EntityManager addTimer( float time ) {
+		CTimer tm = engine.createComponent(CTimer.class);
+		tm.time = time;
+		getEntity().add(tm);
+		return this;
+	}
+
+	public EntityManager addTelegraph( Telegraph teleg ) {
+		CTelegraph tel = engine.createComponent(CTelegraph.class);
+		tel.tel = teleg;
+		getEntity().add(tel);
+		return this;
+	}
+
+	public EntityManager addHit( IHitable interact ) {
 		CIHit inter = engine.createComponent(CIHit.class);
 		inter.interact = interact;
 		getEntity().add(inter);
@@ -84,7 +101,7 @@ public class EntityManager {
 	}
 
 	public EntityManager addActor( IActable actor ) {
-		CActor act = engine.createComponent(CActor.class);
+		CIActor act = engine.createComponent(CIActor.class);
 		act.actor = actor;
 		getEntity().add(act);
 		return this;

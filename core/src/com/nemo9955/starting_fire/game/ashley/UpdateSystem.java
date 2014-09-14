@@ -19,7 +19,7 @@ public class UpdateSystem extends IteratingSystem {
 	public void processEntity( Entity entity, float deltaTime ) {
 		CIUpdate upd = CM.Upd.get(entity);
 
-		upd.update.update(deltaTime);
+		upd.update.update(entity, deltaTime);
 	}
 
 	@Override

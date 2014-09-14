@@ -1,16 +1,16 @@
 package com.nemo9955.starting_fire.game.ashley.components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.utils.Pool.Poolable;
-import com.nemo9955.starting_fire.game.stage.IActable;
 
-public class CActor extends Component implements Poolable {
+public class CTelegraph extends Component implements Poolable {
 
-	public IActable	actor;
+	public Telegraph	tel;
 
 	@Override
 	public void reset() {
-		actor = null;
+		tel = null;
 	}
 
 }

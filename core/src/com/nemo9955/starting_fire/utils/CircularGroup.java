@@ -22,7 +22,6 @@ public class CircularGroup extends WidgetGroup {
 	private float					minAngle		= 0, maxAngle = 359;
 	private float					interval		= 20;
 	private boolean					rotKids			= false;
-	private boolean					modifyAlpha		= true;
 
 	private boolean					clockwise		= true;
 	private float					mid, dir, lungimea;
@@ -101,9 +100,6 @@ public class CircularGroup extends WidgetGroup {
 			tmp1.set(getPositionbyAngle(tmp1, unghi));
 			actor.setPosition(tmp1.x - actor.getWidth() / 2, tmp1.y - actor.getHeight() / 2);
 
-			if ( modifyAlpha )
-				actor.getColor().a = getAlphaByDistance(unghi);
-
 			if ( rotKids ) {
 				actor.setOrigin(actor.getWidth() / 2, actor.getHeight() / 2);
 				actor.setRotation(unghi);
@@ -130,14 +126,6 @@ public class CircularGroup extends WidgetGroup {
 		rotation = degrees;
 		rotation = formatAngle(rotation);
 		invalidate();
-	}
-
-	private float getAlphaByDistance( float unghi ) {
-		float corect = formatAngle(unghi);
-		if ( getDifference(corect, mid) > Math.abs(mid + dir / 2) )
-			return 1 - getDifference(corect, mid) / 180;
-		return 1;
-
 	}
 
 	private float formatAngle( float angle ) {
@@ -227,10 +215,6 @@ public class CircularGroup extends WidgetGroup {
 	 */
 	public void setRotateChildren( boolean rotChildern ) {
 		this.rotKids = rotChildern;
-	}
-
-	public void setModifyAlpha( boolean modifyAlpha ) {
-		this.modifyAlpha = modifyAlpha;
 	}
 
 	public int getRadius() {
