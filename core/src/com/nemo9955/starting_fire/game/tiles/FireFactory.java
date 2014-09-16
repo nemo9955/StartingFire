@@ -42,6 +42,8 @@ public class FireFactory {
 	}
 
 	private static void lightFire( Entity entity ) {
+		float fireTime = 5f;
+
 		CTexture tex = CM.Tex.get(entity);
 		CWorld w = CM.Wor.get(entity);
 		if ( tex != null )
@@ -55,7 +57,12 @@ public class FireFactory {
 			w.world.manager.setEntity(entity).addAnimation(fireAnim);
 		}
 
-		w.world.manager.setEntity(entity).addTimer(5f);
+		CTimer t = CM.Time.get(entity);
+		if ( t != null )
+			t.time += fireTime;
+		else
+			w.world.manager.setEntity(entity).addTimer(fireTime);
+
 		w.world.manager.setEntity(entity).addUpdate(update);
 
 	}
@@ -97,12 +104,13 @@ public class FireFactory {
 
 													@Override
 													public void update( Entity entity, float delta ) {
-														CTimer time = CM.Time.get(entity);
-														time.time -= delta;
+														CTimer t = CM.Time.get(entity);
 
-														if ( time.time <= 0 ) {
-															extinguishFire(entity);
-														}
+														if ( t != null )
+															if ( t.time > 0 )
+																t.time -= delta;
+															else
+																extinguishFire(entity);
 													}
 												};
 

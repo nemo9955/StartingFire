@@ -6,11 +6,11 @@ import com.badlogic.gdx.utils.Pool.Poolable;
 
 public class CIHit extends Component implements Poolable {
 
-	public IHitable	interact;
+	public IHitable	hitter;
 
 	@Override
 	public void reset() {
-		interact = null;
+		hitter = null;
 	}
 
 	public static interface IHitable {

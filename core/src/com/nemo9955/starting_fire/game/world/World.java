@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
@@ -84,10 +83,10 @@ public class World implements Disposable {
 		int key = width * q + r;
 
 		if ( map.containsKey(key) ) {
-			Gdx.app.log("WorldGen", "EXISTS : " + key + " -> " + q + " " + r);
+			// Gdx.app.log("WorldGen", "EXISTS : " + key + " -> " + q + " " + r);
 			entity = map.get(key);
 		} else {
-			Gdx.app.log("WorldGen", "CREATE : " + key + " -> " + q + " " + r);
+			// Gdx.app.log("WorldGen", "CREATE : " + key + " -> " + q + " " + r);
 			entity = engine.createEntity();
 			CWorld cw = engine.createComponent(CWorld.class);
 			cw.world = this;
@@ -112,9 +111,9 @@ public class World implements Disposable {
 			CCollision col = CM.Col.get(ents.get(i));
 			if ( col.isInside(x, y) ) {
 
-				CIHit inter = CM.Inter.get(ents.get(i));
-				if ( inter != null )
-					inter.interact.hit(ents.get(i));
+				CIHit h = CM.Inter.get(ents.get(i));
+				if ( h != null )
+					h.hitter.hit(ents.get(i));
 				else {
 					CTexture tex = CM.Tex.get(ents.get(i));
 					if ( tex != null ) {
@@ -125,7 +124,6 @@ public class World implements Disposable {
 							tex.tex.add(hili);
 					}
 				}
-
 				break;
 			}
 		}

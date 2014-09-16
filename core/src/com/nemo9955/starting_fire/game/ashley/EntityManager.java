@@ -69,7 +69,7 @@ public class EntityManager {
 
 	public EntityManager addHit( IHitable interact ) {
 		CIHit inter = world.createComponent(CIHit.class);
-		inter.interact = interact;
+		inter.hitter = interact;
 		entity.add(inter);
 		return this;
 	}
