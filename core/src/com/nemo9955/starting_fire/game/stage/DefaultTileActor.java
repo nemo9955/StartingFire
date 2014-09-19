@@ -1,6 +1,7 @@
 package com.nemo9955.starting_fire.game.stage;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.nemo9955.starting_fire.game.ashley.EntityManager;
 import com.nemo9955.starting_fire.game.ashley.components.CIActor;
@@ -37,14 +38,16 @@ public class DefaultTileActor implements IActable {
 		SF.gameplay.stage.addEntActor(this);
 	}
 
+	private static Vector3	tpC1	= new Vector3();
+
 	@Override
 	public void resize( int width, int height ) {
 
 		CIActor act = CM.Act.get((Entity) actor.getUserObject());
 		CPosition poz = CM.Pos.get((Entity) actor.getUserObject());
 		CWorld w = CM.Wor.get((Entity) actor.getUserObject());
-		SF.gameplay.camera.project(SF.tpC1.set(poz.x + w.world.hexWidht / 2, poz.y + w.world.hexHeight / 2, 0));
-		act.actor.getGroup().setPosition(SF.tpC1.x, SF.tpC1.y);
+		SF.gameplay.camera.project(tpC1.set(poz.x + w.world.hexWidht / 2, poz.y + w.world.hexHeight / 2, 0));
+		act.actor.getGroup().setPosition(tpC1.x, tpC1.y);
 
 	}
 
@@ -65,10 +68,9 @@ public class DefaultTileActor implements IActable {
 										CIActor act = CM.Act.get(ent);
 										CPosition poz = CM.Pos.get(ent);
 										CWorld w = CM.Wor.get(ent);
-										SF.gameplay.camera.project(SF.tpC1.set(poz.x + w.world.hexWidht / 2, poz.y
-													+ w.world.hexHeight / 2,
+										SF.gameplay.camera.project(tpC1.set(poz.x + w.world.hexWidht / 2, poz.y + w.world.hexHeight / 2,
 													0));
-										act.actor.getGroup().setPosition(SF.tpC1.x, SF.tpC1.y);
+										act.actor.getGroup().setPosition(tpC1.x, tpC1.y);
 										act.actor.getGroup().setVisible(!act.actor.getGroup().isVisible());
 
 									}

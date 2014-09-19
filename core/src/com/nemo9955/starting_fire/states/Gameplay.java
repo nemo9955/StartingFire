@@ -45,7 +45,6 @@ public class Gameplay extends InputAdapter implements Screen {
 		Gdx.input.setInputProcessor(inputs);
 		stage.restart();
 		world = new World(15, 13, 127, 82);
-		camera.position.setZero();
 	}
 
 	@Override
@@ -57,6 +56,7 @@ public class Gameplay extends InputAdapter implements Screen {
 
 		SF.spritesBatch.setProjectionMatrix(camera.combined);
 		SF.shapeRend.setProjectionMatrix(camera.combined);
+		SF.spritesBatch.setColor(1, 1, 1, 1);
 		SF.spritesBatch.begin();
 		// SF.shapeRend.begin(ShapeType.Line);
 		world.manage(delta);

@@ -10,22 +10,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.nemo9955.starting_fire.game.ashley.EntityManager;
 import com.nemo9955.starting_fire.game.ashley.components.CAnimation;
-import com.nemo9955.starting_fire.game.ashley.components.CCoordinate;
 import com.nemo9955.starting_fire.game.ashley.components.CIUpdate;
 import com.nemo9955.starting_fire.game.ashley.components.CIUpdate.IUpdatable;
 import com.nemo9955.starting_fire.game.ashley.components.CM;
+import com.nemo9955.starting_fire.game.ashley.components.CPosition;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
 import com.nemo9955.starting_fire.game.ashley.components.CTimer;
 import com.nemo9955.starting_fire.game.ashley.components.CWorld;
-import com.nemo9955.starting_fire.game.events.Event;
-import com.nemo9955.starting_fire.game.events.EventManager;
+import com.nemo9955.starting_fire.game.events.Events;
 import com.nemo9955.starting_fire.game.stage.DefaultTileActor;
 import com.nemo9955.starting_fire.storage.SF;
 
 public class FireFactory {
 
+	public static Entity		fire;
+
 	private static TextButton	entLightFire	= new TextButton("Light Fire", SF.skin);
-	private static TextButton	entMWorkB		= new TextButton("Make WorkBench", SF.skin);
 
 	private static Animation	fireAnim		= new Animation(0.1f, SF.atlas.findRegions("small_fire"), PlayMode.LOOP_PINGPONG);
 	private static AtlasRegion	fireUnlit		= SF.atlas.findRegion("small_fire_unlit");
@@ -34,13 +34,20 @@ public class FireFactory {
 
 		DefaultTileActor actor = new DefaultTileActor(manager);
 		actor.getGroup().addActor(entLightFire);
-		actor.getGroup().addActor(entMWorkB);
 		actor.getGroup().addListener(listener);
 		manager.addActor(actor);
 
 		manager.addTexture(fireUnlit);
-		// manager.addUpdate(update);
 		// manager.addTelegraph(telegraph);TODO
+		fire = manager.getEntity();
+		centerCamera();
+
+	}
+
+	public static void centerCamera() {
+		CPosition poz = CM.Pos.get(fire);
+		CWorld w = CM.Wor.get(fire);
+		SF.gameplay.camera.position.set(poz.x + w.world.hexWidht / 2, poz.y + w.world.hexHeight / 2, 0);
 	}
 
 	private static void lightFire( Entity entity ) {
@@ -67,7 +74,7 @@ public class FireFactory {
 
 		w.world.manager.setEntity(entity).addUpdate(update);
 
-		EventManager.call(Event.Fire_Lit);
+		Events.Fire_Lit.call();
 	}
 
 	private static void extinguishFire( Entity entity ) {
@@ -87,17 +94,6 @@ public class FireFactory {
 
 														if ( entLightFire.isPressed() )
 															lightFire(entity);
-														else if ( entMWorkB.isPressed() ) {
-															CCoordinate co = CM.Coor.get(entity);
-															CWorld wo = CM.Wor.get(entity);
-
-															EntityManager manager = wo.world.manager;
-															manager.setEntity(wo.world.getHex(co.q + 2, co.r - 1));
-
-															WorckBFactory.useElement(manager);
-
-															parent.removeActor(entMWorkB);
-														}
 
 														// actor.actor.getGroup().setVisible(false);
 													}
