@@ -3,7 +3,9 @@ package com.nemo9955.starting_fire.game.stage;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -16,22 +18,24 @@ public class GamePlayStage extends Stage {
 
 	private Group			currentGroup;
 
-	ImageButton				hudMenuBut	= new ImageButton(SF.skin, "IGpause");
-	ImageButton				hudCenter	= new ImageButton(SF.skin, "vCenter_small");
-	public Group			hudHolder	= new Group() {
+	ImageButton				hudNotifBut		= new ImageButton(SF.skin, "notification");
+	public HorizontalGroup	hudNotifHolder	= new HorizontalGroup();
+	ImageButton				hudMenuBut		= new ImageButton(SF.skin, "IGpause");
+	ImageButton				hudCenter		= new ImageButton(SF.skin, "vCenter_small");
+	public Group			hudHolder		= new Group() {
 
-											@Override
-											public void setVisible( boolean visible ) {
-												super.setVisible(visible);
-												SF.gameplay.activateAllInputes(visible);
-											}
-										};
+												@Override
+												public void setVisible( boolean visible ) {
+													super.setVisible(visible);
+													SF.gameplay.activateAllInputes(visible);
+												}
+											};
 
-	TextButton				menuResume	= new TextButton("Resume", SF.skin);
-	TextButton				menuMMenu	= new TextButton("Main Menu", SF.skin);
-	public Table			menuHolder	= new Table(SF.skin);
+	TextButton				menuResume		= new TextButton("Resume", SF.skin);
+	TextButton				menuMMenu		= new TextButton("Main Menu", SF.skin);
+	public Table			menuHolder		= new Table(SF.skin);
 
-	private Array<IActable>	entActors	= new Array<IActable>();
+	private Array<IActable>	entActors		= new Array<IActable>();
 
 	public GamePlayStage() {
 		super(new ScreenViewport(), SF.spritesBatch);
@@ -48,6 +52,11 @@ public class GamePlayStage extends Stage {
 		// hudCenter.setBackground(new TextureRegionDrawable(vCen));
 		// hudCenter.set
 		hudHolder.addActor(hudCenter);
+		hudHolder.addActor(hudNotifBut);
+
+		ScrollPane notifScr = new ScrollPane(hudNotifHolder);
+		// notifScr.setsi
+		hudHolder.addActor(notifScr);
 
 		hudHolder.addListener(hudListener);
 		addActor(hudHolder);
@@ -61,6 +70,8 @@ public class GamePlayStage extends Stage {
 											changeGroup(menuHolder);
 										} else if ( hudCenter.isPressed() ) {
 											SF.gameplay.camera.position.setZero();
+										}
+										else if ( hudNotifBut.isPressed() ) {
 										}
 
 									}
@@ -104,6 +115,7 @@ public class GamePlayStage extends Stage {
 		getViewport().update(width, height, true);
 		hudMenuBut.setPosition(getWidth() - hudMenuBut.getWidth(), getHeight() - hudMenuBut.getHeight());
 		hudCenter.setPosition(getWidth() * 0.1f, getHeight() - hudCenter.getHeight());
+		hudNotifBut.setPosition(0, 0);
 
 		for (IActable act : entActors)
 			act.resize(width, height);

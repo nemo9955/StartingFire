@@ -17,6 +17,8 @@ import com.nemo9955.starting_fire.game.ashley.components.CM;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
 import com.nemo9955.starting_fire.game.ashley.components.CTimer;
 import com.nemo9955.starting_fire.game.ashley.components.CWorld;
+import com.nemo9955.starting_fire.game.events.Event;
+import com.nemo9955.starting_fire.game.events.EventManager;
 import com.nemo9955.starting_fire.game.stage.DefaultTileActor;
 import com.nemo9955.starting_fire.storage.SF;
 
@@ -65,6 +67,7 @@ public class FireFactory {
 
 		w.world.manager.setEntity(entity).addUpdate(update);
 
+		EventManager.call(Event.Fire_Lit);
 	}
 
 	private static void extinguishFire( Entity entity ) {

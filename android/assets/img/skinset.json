@@ -14,7 +14,7 @@
 	
 	com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	        default:   { font: arial, fontColor: white },
-	        black: { font: arial, fontColor: black },
+	        black:     { font: arial, fontColor: black },
 	},
 	
 	 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
@@ -34,6 +34,7 @@
 		default:       { imageUp: buton_up , imageDown: buton_down , imageOver: buton_over  },
 		IGpause:       { imageUp: IGpause , pressedOffsetX: -2 , pressedOffsetY: -2},
 		vCenter_small :{ imageUp: vCenter_small , pressedOffsetY: -3},
+		notification  :{ imageUp: knobST , pressedOffsetX: 2 , pressedOffsetY: 2},
 		
 	},
 	
