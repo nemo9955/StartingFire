@@ -31,7 +31,8 @@ public class PreSorter {
 	 */
 	public static void add( Entity ent ) {
 		CPosition poz = ent.getComponent(CPosition.class);
-		ents.add(new IndexedEntity(poz.y, ent));
+		ents.add(new IndexedEntity(
+					poz.y, ent));
 	}
 
 	/**

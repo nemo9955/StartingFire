@@ -10,15 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.nemo9955.starting_fire.game.ashley.EntityManager;
 import com.nemo9955.starting_fire.game.ashley.components.CAnimation;
-import com.nemo9955.starting_fire.game.ashley.components.CIUpdate;
-import com.nemo9955.starting_fire.game.ashley.components.CIUpdate.IUpdatable;
+import com.nemo9955.starting_fire.game.ashley.components.CInfo;
+import com.nemo9955.starting_fire.game.ashley.components.CInfo.Spot;
 import com.nemo9955.starting_fire.game.ashley.components.CM;
 import com.nemo9955.starting_fire.game.ashley.components.CPosition;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
 import com.nemo9955.starting_fire.game.ashley.components.CTimer;
-import com.nemo9955.starting_fire.game.ashley.components.CWorld;
+import com.nemo9955.starting_fire.game.ashley.components.CUpdate;
+import com.nemo9955.starting_fire.game.ashley.components.CUpdate.IUpdatable;
 import com.nemo9955.starting_fire.game.events.Events;
 import com.nemo9955.starting_fire.game.stage.DefaultTileActor;
+import com.nemo9955.starting_fire.storage.Func;
 import com.nemo9955.starting_fire.storage.SF;
 
 public class FireFactory {
@@ -30,31 +32,39 @@ public class FireFactory {
 	private static Animation	fireAnim		= new Animation(0.1f, SF.atlas.findRegions("small_fire"), PlayMode.LOOP_PINGPONG);
 	private static AtlasRegion	fireUnlit		= SF.atlas.findRegion("small_fire_unlit");
 
-	public static void useElement( EntityManager manager ) {
+	public static void useElement( Entity entity ) {
 
-		DefaultTileActor actor = new DefaultTileActor(manager);
+		entity = Func.findSpot(entity, Spot.empty);
+
+		EntityManager manager = CM.Info.get(entity).world.manager;
+
+		DefaultTileActor actor = new DefaultTileActor(entity);
 		actor.getGroup().addActor(entLightFire);
 		actor.getGroup().addListener(listener);
-		manager.addActor(actor);
+		manager.addActor(entity, actor);
 
-		manager.addTexture(fireUnlit);
+		manager.addTexture(entity, fireUnlit);
 		// manager.addTelegraph(telegraph);TODO
-		fire = manager.getEntity();
+		fire = entity;
 		centerCamera();
 
 	}
 
 	public static void centerCamera() {
 		CPosition poz = CM.Pos.get(fire);
-		CWorld w = CM.Wor.get(fire);
-		SF.gameplay.camera.position.set(poz.x + w.world.hexWidht / 2, poz.y + w.world.hexHeight / 2, 0);
+		CInfo i = CM.Info.get(fire);
+		SF.gameplay.camera.position.set(
+					poz.x +
+								i.world.hexWidht / 2,
+					poz.y +
+								i.world.hexHeight / 2, 0);
 	}
 
 	private static void lightFire( Entity entity ) {
 		float fireTime = 5f;
 
 		CTexture tex = CM.Tex.get(entity);
-		CWorld w = CM.Wor.get(entity);
+		CInfo i = CM.Info.get(entity);
 		if ( tex != null )
 			if ( tex.tex.contains(fireUnlit, true) )
 				tex.tex.removeValue(fireUnlit, true);
@@ -63,16 +73,16 @@ public class FireFactory {
 		if ( anim != null )
 			anim.anim = fireAnim;
 		else {
-			w.world.manager.setEntity(entity).addAnimation(fireAnim);
+			i.world.manager.addAnimation(entity, fireAnim);
 		}
 
 		CTimer t = CM.Time.get(entity);
 		if ( t != null )
 			t.time += fireTime;
 		else
-			w.world.manager.setEntity(entity).addTimer(fireTime);
+			i.world.manager.addTimer(entity, fireTime);
 
-		w.world.manager.setEntity(entity).addUpdate(update);
+		i.world.manager.addUpdate(entity, update);
 
 		Events.Fire_Lit.call();
 	}
@@ -80,7 +90,7 @@ public class FireFactory {
 	private static void extinguishFire( Entity entity ) {
 		CTexture tex = CM.Tex.get(entity);
 		tex.tex.add(fireUnlit);
-		entity.remove(CIUpdate.class);
+		entity.remove(CUpdate.class);
 		entity.remove(CAnimation.class);
 		entity.remove(CTimer.class);
 	}

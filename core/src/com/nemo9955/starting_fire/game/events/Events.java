@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.Array;
 
 public enum Events {
 
-	Fire_Lit;
+	Fire_Lit, Berries;
 
 	private Array<IEventListener>	listeners	= new Array<IEventListener>(1);
 

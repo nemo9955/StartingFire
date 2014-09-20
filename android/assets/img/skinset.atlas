@@ -1,19 +1,19 @@
 
 skinset.png
-size: 124,513
+size: 509,139
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 IGpause
   rotate: false
-  xy: 1, 346
+  xy: 103, 74
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 buton_down
   rotate: false
-  xy: 1, 218
+  xy: 169, 12
   size: 60, 60
   split: 14, 15, 11, 11
   orig: 60, 60
@@ -21,7 +21,7 @@ buton_down
   index: -1
 buton_over
   rotate: false
-  xy: 1, 156
+  xy: 231, 12
   size: 60, 60
   split: 14, 16, 13, 16
   orig: 60, 60
@@ -29,7 +29,7 @@ buton_over
   index: -1
 buton_up
   rotate: false
-  xy: 1, 94
+  xy: 235, 78
   size: 60, 60
   split: 14, 16, 14, 16
   orig: 60, 60
@@ -37,14 +37,14 @@ buton_up
   index: -1
 checked
   rotate: false
-  xy: 63, 95
+  xy: 459, 41
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 element1
   rotate: false
-  xy: 1, 32
+  xy: 293, 16
   size: 60, 60
   split: 12, 14, 14, 16
   orig: 60, 60
@@ -52,7 +52,7 @@ element1
   index: -1
 element2
   rotate: false
-  xy: 63, 194
+  xy: 297, 78
   size: 60, 60
   split: 14, 16, 14, 16
   orig: 60, 60
@@ -60,105 +60,112 @@ element2
   index: -1
 knobST
   rotate: false
-  xy: 67, 360
+  xy: 355, 26
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 leftST
   rotate: false
-  xy: 67, 308
+  xy: 359, 88
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 midST
   rotate: false
-  xy: 67, 256
+  xy: 407, 36
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 mover-bg
   rotate: false
-  xy: 1, 412
+  xy: 1, 38
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 mover-knob
   rotate: false
-  xy: 1, 4
+  xy: 1, 10
   size: 26, 26
   orig: 26, 26
   offset: 0, 0
   index: -1
+notification
+  rotate: false
+  xy: 103, 8
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 pix100
   rotate: false
-  xy: 110, 139
+  xy: 4, 7
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 pix100blue
   rotate: false
-  xy: 63, 45
+  xy: 4, 4
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 pix100green
   rotate: false
-  xy: 1, 1
+  xy: 4, 1
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 pix100red
   rotate: false
-  xy: 29, 29
+  xy: 7, 7
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 pix30
   rotate: false
-  xy: 103, 511
+  xy: 1, 7
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 pix50
   rotate: false
-  xy: 63, 277
+  xy: 1, 4
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 pix80
   rotate: false
-  xy: 115, 191
+  xy: 1, 1
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 rightST
   rotate: false
-  xy: 63, 142
+  xy: 411, 88
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 unchecked
   rotate: false
-  xy: 63, 48
+  xy: 463, 93
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 vCenter_small
   rotate: false
-  xy: 1, 280
+  xy: 169, 74
   size: 64, 64
   orig: 64, 64
   offset: 0, 0

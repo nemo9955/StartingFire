@@ -40,6 +40,7 @@ public class NotificationManager {
 	}
 
 	public static void registerNotif( Notification not ) {
+		not.reset();
 		if ( not instanceof IEventListener ) {
 			((IEventListener) not).register();
 		}
@@ -68,8 +69,6 @@ public class NotificationManager {
 		current.pack();
 		current.setCenterPosition((stage.getWidth() / 2), ((stage.getHeight() / 2)));
 
-		// not.getHolder().show(stage, null);
-		// stage.addActor(current);
 	}
 
 	public static void hideNotif() {

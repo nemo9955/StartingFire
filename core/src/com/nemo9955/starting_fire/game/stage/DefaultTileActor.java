@@ -4,12 +4,12 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.nemo9955.starting_fire.game.ashley.EntityManager;
-import com.nemo9955.starting_fire.game.ashley.components.CIActor;
-import com.nemo9955.starting_fire.game.ashley.components.CIActor.IActable;
-import com.nemo9955.starting_fire.game.ashley.components.CIHit.IHitable;
+import com.nemo9955.starting_fire.game.ashley.components.CActor;
+import com.nemo9955.starting_fire.game.ashley.components.CActor.IActable;
+import com.nemo9955.starting_fire.game.ashley.components.CHit.IHitable;
+import com.nemo9955.starting_fire.game.ashley.components.CInfo;
 import com.nemo9955.starting_fire.game.ashley.components.CM;
 import com.nemo9955.starting_fire.game.ashley.components.CPosition;
-import com.nemo9955.starting_fire.game.ashley.components.CWorld;
 import com.nemo9955.starting_fire.storage.SF;
 import com.nemo9955.starting_fire.utils.CircularGroup;
 
@@ -17,8 +17,9 @@ public class DefaultTileActor implements IActable {
 
 	CircularGroup	actor;
 
-	public DefaultTileActor(EntityManager manager) {
-		manager.addHit(hit);
+	public DefaultTileActor(Entity entity) {
+		EntityManager manager = CM.Info.get(entity).world.manager;
+		manager.addHit(entity, hit);
 		actor = new CircularGroup(SF.shapeRend) {
 
 			@Override
@@ -28,7 +29,7 @@ public class DefaultTileActor implements IActable {
 			}
 		};
 
-		actor.setUserObject(manager.getEntity());
+		actor.setUserObject(entity);
 		actor.setVisible(false);
 		actor.setHideAtMiss(true);
 
@@ -42,18 +43,11 @@ public class DefaultTileActor implements IActable {
 
 	@Override
 	public void resize( int width, int height ) {
-
-		CIActor act = CM.Act.get((Entity) actor.getUserObject());
+		CActor act = CM.Act.get((Entity) actor.getUserObject());
 		CPosition poz = CM.Pos.get((Entity) actor.getUserObject());
-		CWorld w = CM.Wor.get((Entity) actor.getUserObject());
-		SF.gameplay.camera.project(tpC1.set(poz.x + w.world.hexWidht / 2, poz.y + w.world.hexHeight / 2, 0));
+		CInfo i = CM.Info.get((Entity) actor.getUserObject());
+		SF.gameplay.camera.project(tpC1.set(poz.x + i.world.hexWidht / 2, poz.y + i.world.hexHeight / 2, 0));
 		act.actor.getGroup().setPosition(tpC1.x, tpC1.y);
-
-	}
-
-	@Override
-	public void restart() {
-		actor.setVisible(false);
 	}
 
 	@Override
@@ -65,10 +59,10 @@ public class DefaultTileActor implements IActable {
 
 									@Override
 									public void hit( Entity ent ) {
-										CIActor act = CM.Act.get(ent);
+										CActor act = CM.Act.get(ent);
 										CPosition poz = CM.Pos.get(ent);
-										CWorld w = CM.Wor.get(ent);
-										SF.gameplay.camera.project(tpC1.set(poz.x + w.world.hexWidht / 2, poz.y + w.world.hexHeight / 2,
+										CInfo i = CM.Info.get(ent);
+										SF.gameplay.camera.project(tpC1.set(poz.x + i.world.hexWidht / 2, poz.y + i.world.hexHeight / 2,
 													0));
 										act.actor.getGroup().setPosition(tpC1.x, tpC1.y);
 										act.actor.getGroup().setVisible(!act.actor.getGroup().isVisible());

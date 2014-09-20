@@ -7,10 +7,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.collision.Ray;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nemo9955.starting_fire.game.stage.GamePlayStage;
 import com.nemo9955.starting_fire.game.world.World;
 import com.nemo9955.starting_fire.storage.SF;
+import com.nemo9955.starting_fire.storage.Vars;
 import com.nemo9955.starting_fire.utils.OrthoCamController;
 
 public class Gameplay extends InputAdapter implements Screen {
@@ -30,7 +32,7 @@ public class Gameplay extends InputAdapter implements Screen {
 		camera.setToOrtho(false);
 		camera.update();
 		viewport = new ScreenViewport(camera);
-		viewport.setUnitsPerPixel(1.8f);
+		viewport.setUnitsPerPixel(1.9f);
 
 		stage = new GamePlayStage();
 
@@ -46,6 +48,8 @@ public class Gameplay extends InputAdapter implements Screen {
 		stage.restart();
 		world = new World(15, 13, 127, 82);
 	}
+
+	private long	startTime;
 
 	@Override
 	public void render( float delta ) {
@@ -63,6 +67,13 @@ public class Gameplay extends InputAdapter implements Screen {
 		SF.spritesBatch.end();
 		// SF.shapeRend.end();
 		stage.manage(delta);
+
+		if ( TimeUtils.nanoTime() - startTime > 1000000000 ) /* 1,000,000,000ns == one second */{
+			// Gdx.app.log("FPSLogger", "fps: " + Gdx.graphics.getFramesPerSecond());
+			Gdx.graphics.setTitle(Vars.title + " - FPS : " + Gdx.graphics.getFramesPerSecond());
+			startTime = TimeUtils.nanoTime();
+		}
+
 	}
 
 	@Override

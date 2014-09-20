@@ -6,20 +6,15 @@ import com.nemo9955.starting_fire.storage.SF;
 
 public enum HexBase {
 
-	DIRT("dirt"), GRAVEL("gravel"), GRASS("grass"), WATER("water"), SAND("sand");
+	Dirt, Gravel, Grass, Water, Sand;
 
-	String	name;
-
-	private HexBase(String name) {
-		this.name = name;
+	@Override
+	public String toString() {
+		return this.name().toLowerCase().replace('_', ' ');
 	}
 
 	public TextureRegion getTex() {
-		return SF.atlas.findRegion(name);
-	}
-
-	public String getName() {
-		return name;
+		return SF.atlas.findRegion(toString());
 	}
 
 	public static HexBase getRandomValue() {

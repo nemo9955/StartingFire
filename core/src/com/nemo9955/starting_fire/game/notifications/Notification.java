@@ -43,6 +43,10 @@ public abstract class Notification {
 		return holder;
 	}
 
+	public void reset() {
+
+	}
+
 	private ChangeListener	listener	= new ChangeListener() {
 
 											@Override

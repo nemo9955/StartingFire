@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
-public class CIActor extends Component implements Poolable {
+public class CActor extends Component implements Poolable {
 
 	public IActable	actor;
 
@@ -16,8 +16,6 @@ public class CIActor extends Component implements Poolable {
 	public static interface IActable {
 
 		public void resize( int width, int height );
-
-		public void restart();
 
 		public Group getGroup();
 

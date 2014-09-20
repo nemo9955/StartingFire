@@ -13,10 +13,11 @@ import com.nemo9955.starting_fire.game.ashley.EntityManager;
 import com.nemo9955.starting_fire.game.ashley.RenderSystem;
 import com.nemo9955.starting_fire.game.ashley.UpdateSystem;
 import com.nemo9955.starting_fire.game.ashley.components.CCollision;
-import com.nemo9955.starting_fire.game.ashley.components.CIHit;
+import com.nemo9955.starting_fire.game.ashley.components.CHit;
+import com.nemo9955.starting_fire.game.ashley.components.CInfo;
+import com.nemo9955.starting_fire.game.ashley.components.CInfo.Spot;
 import com.nemo9955.starting_fire.game.ashley.components.CM;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
-import com.nemo9955.starting_fire.game.ashley.components.CWorld;
 import com.nemo9955.starting_fire.game.events.Events;
 import com.nemo9955.starting_fire.game.notifications.NotWorckBench;
 import com.nemo9955.starting_fire.game.notifications.NotificationManager;
@@ -29,7 +30,7 @@ public class World implements Disposable {
 	public EntityManager	manager		= new EntityManager(this);
 	public int				width, height, hexWidht, hexHeight;
 	public float			stateTime	= 0;
-	public boolean			offsetPlace	= false;
+	public boolean			offsetPlace	= !false;
 
 	private IntMap<Entity>	map;
 
@@ -40,18 +41,20 @@ public class World implements Disposable {
 		this.hexHeight = hexHeight;
 		map = new IntMap<Entity>(width * height);
 
+		generateNewWorldType();
+
 		engine.addSystem(new RenderSystem());
 		engine.addSystem(new UpdateSystem());
-
-		generateNewWorldType();
 	}
 
 	public void generateNewWorldType() {
 		Events.clearAll();
+		Resources.reset();
 		engine.removeAllEntities();
 		map.clear();
+		SF.gameplay.stage.restart();
 
-		NotificationManager.registerNotif(new NotWorckBench());
+		NotificationManager.registerNotif(NotWorckBench.inst);
 		WorldGenerator.genWorld(this, GenType.RectLife);
 	}
 
@@ -86,7 +89,7 @@ public class World implements Disposable {
 	 */
 	public Entity getHex( int q, int r ) {
 		Entity entity;
-		int key = width * q + r;
+		int key = 1000 * q + r;
 
 		if ( map.containsKey(key) ) {
 			// Gdx.app.log("WorldGen", "EXISTS : " + key + " -> " + q + " " + r);
@@ -94,9 +97,10 @@ public class World implements Disposable {
 		} else {
 			// Gdx.app.log("WorldGen", "CREATE : " + key + " -> " + q + " " + r);
 			entity = engine.createEntity();
-			CWorld cw = engine.createComponent(CWorld.class);
-			cw.world = this;
-			entity.add(cw);
+			CInfo i = engine.createComponent(CInfo.class);
+			i.world = this;
+			i.spot = Spot.empty;
+			entity.add(i);
 			map.put(key, entity);
 		}
 
@@ -116,8 +120,9 @@ public class World implements Disposable {
 		for (int i = 0; i < ents.size(); i++) {
 			CCollision col = CM.Col.get(ents.get(i));
 			if ( col.isInside(x, y) ) {
+				// System.out.println(CM.Info.get(ents.get(i)).spot.name());
 
-				CIHit h = CM.Inter.get(ents.get(i));
+				CHit h = CM.Hit.get(ents.get(i));
 				if ( h != null )
 					h.hitter.hit(ents.get(i));
 				else {

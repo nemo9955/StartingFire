@@ -4,19 +4,18 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
-public class CIHit extends Component implements Poolable {
+public class CUpdate extends Component implements Poolable {
 
-	public IHitable	hitter;
+	public IUpdatable	update;
 
 	@Override
 	public void reset() {
-		hitter = null;
+		update = null;
 	}
 
-	public static interface IHitable {
+	public static interface IUpdatable {
 
-		public void hit( Entity ent );
-
+		public void update( Entity entity, float delta );
 	}
 
 }

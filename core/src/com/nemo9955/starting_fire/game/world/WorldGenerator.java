@@ -1,14 +1,45 @@
 package com.nemo9955.starting_fire.game.world;
 
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.math.MathUtils;
+import com.nemo9955.starting_fire.game.ashley.EntityManager;
 import com.nemo9955.starting_fire.game.ashley.PreSorter;
+import com.nemo9955.starting_fire.game.ashley.components.CInfo;
+import com.nemo9955.starting_fire.game.ashley.components.CM;
+import com.nemo9955.starting_fire.game.tiles.BerriesFactory;
+import com.nemo9955.starting_fire.game.tiles.FireFactory;
 import com.nemo9955.starting_fire.game.tiles.HexBase;
+import com.nemo9955.starting_fire.game.tiles.TreesFactory;
+import com.nemo9955.starting_fire.storage.Func;
 
 public class WorldGenerator {
 
 	private static World	world;
 
+	public static Entity makeHex( HexBase hex, int q, int r ) {
+		Entity entity = world.getHex(q, r);
+		EntityManager manager = CM.Info.get(entity).world.manager;
+		CM.Info.get(entity).hex = hex;
+
+		manager.addCoordinates(entity, q, r);
+		manager.addTexture(entity, hex.getTex());
+
+		float x = world.hexWidht * 0.75f * q;
+		float y;
+		if ( world.offsetPlace )
+			y = ((q & 1) == 1 ? world.hexHeight * 0.5f : 0) - (world.hexHeight * r);
+		else
+			y = -(world.hexHeight * 0.5f * (r * 2 + 1 + q));
+
+		manager.addPosition(entity, x, y);
+		manager.addCollision(entity, x, y, world.hexWidht, world.hexHeight);
+
+		return entity;
+	}
+
 	static void generateNoiseWorld() {
+		int[] ofs = Func.getNeig(world);
 		float chanceAllive = 0.4f;
 		int birthLimit = 4;
 		int deathLimit = 4;
@@ -18,6 +49,13 @@ public class WorldGenerator {
 		for (int i = 0; i < map.length; i++)
 			for (int j = 0; j < map[0].length; j++)
 				map[i][j] = MathUtils.randomBoolean(chanceAllive) ? true : false;
+
+		int fq = world.width / 2;
+		int fr = world.height / 2;
+
+		map[fq][fr] = false;
+		for (int o = 0; o < ofs.length; o += 2)
+			map[fq + ofs[o]][fr + ofs[o] + 1] = false;
 
 		for (int step = 0; step < steps; step++) {
 			boolean[][] temp = new boolean[world.width][world.height];
@@ -45,11 +83,11 @@ public class WorldGenerator {
 		for (int i = 0; i < map.length; i++)
 			for (int j = 0; j < map[0].length; j++)
 				if ( map[i][j] )
-					PreSorter.add(world.manager.makeHex(HexBase.GRASS, i, j));
+					PreSorter.add(makeHex(HexBase.Grass, i, j));
 				else if ( MathUtils.randomBoolean(0.8f) )
-					PreSorter.add(world.manager.makeHex(HexBase.DIRT, i, j));
+					PreSorter.add(makeHex(HexBase.Dirt, i, j));
 				else
-					PreSorter.add(world.manager.makeHex(HexBase.GRAVEL, i, j));
+					PreSorter.add(makeHex(HexBase.Gravel, i, j));
 
 		PreSorter.end(world.engine);
 
@@ -78,23 +116,23 @@ public class WorldGenerator {
 		PreSorter.begin();
 		for (int col = 0; col < world.height; col++)
 			for (int row = world.width - 1; row > -1; row--)
-				PreSorter.add(world.manager.makeHex(HexBase.GRASS, col, row));
+				PreSorter.add(makeHex(HexBase.Grass, col, row));
 		PreSorter.end(world.engine);
 	}
 
 	static void generateHoneyComb( int radius ) {
 		world.offsetPlace = false;
 		PreSorter.begin();
-		PreSorter.add(world.manager.makeHex(HexBase.GRASS, 0, 0));
+		PreSorter.add(makeHex(HexBase.Grass, 0, 0));
 		for (int r = 0; r > -radius; r--)
 			for (int q = -r - 1; q > -radius - r; q--)
-				PreSorter.add(world.manager.makeHex(HexBase.GRASS, q, r));
+				PreSorter.add(makeHex(HexBase.Grass, q, r));
 		for (int r = 1; r < radius; r++)
 			for (int q = 0; q > -radius; q--)
-				PreSorter.add(world.manager.makeHex(HexBase.GRASS, q, r));
+				PreSorter.add(makeHex(HexBase.Grass, q, r));
 		for (int q = 1; q < radius; q++)
 			for (int r = -q; r < radius - q; r++)
-				PreSorter.add(world.manager.makeHex(HexBase.GRASS, q, r));
+				PreSorter.add(makeHex(HexBase.Grass, q, r));
 		PreSorter.end(world.engine);
 	}
 
@@ -112,7 +150,28 @@ public class WorldGenerator {
 				generateNoiseWorld();
 				break;
 		}
-		world = null;
+
+		addDetails();
+
+	}
+
+	@SuppressWarnings("unchecked")
+	private static void addDetails() {
+		for (int q = 0; q < world.width; q++)
+			for (int r = 0; r < world.height; r++)
+				if ( q == world.width / 2 && r == world.height / 2 )
+					FireFactory.useElement(world.getHex(q, r));
+
+		Entity[] entities = world.engine.getEntitiesFor(Family.getFor(CInfo.class)).toArray(Entity.class);
+
+		for (Entity ent : entities)
+			if ( CM.Info.get(ent).hex == HexBase.Grass && MathUtils.randomBoolean(0.13f) )
+				TreesFactory.useElement(ent);
+
+		for (Entity ent : entities)
+			if ( CM.Info.get(ent).hex == HexBase.Grass && MathUtils.randomBoolean(0.06f) )
+				BerriesFactory.useElement(ent);
+
 	}
 
 	public static enum GenType {

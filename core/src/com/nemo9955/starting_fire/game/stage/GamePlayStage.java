@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.nemo9955.starting_fire.game.ashley.components.CIActor.IActable;
+import com.nemo9955.starting_fire.game.ashley.components.CActor.IActable;
 import com.nemo9955.starting_fire.game.tiles.FireFactory;
 import com.nemo9955.starting_fire.storage.SF;
 
@@ -107,11 +107,11 @@ public class GamePlayStage extends Stage {
 									};
 
 	public void restart() {
+		entActors.clear();
+		hudNotifHolder.clearChildren();
 		currentGroup = hudHolder;
 		hudHolder.setVisible(true);
 		menuHolder.setVisible(false);
-		for (IActable act : entActors)
-			act.restart();;
 	}
 
 	public void resize( int width, int height ) {

@@ -34,7 +34,7 @@
 		default:       { imageUp: buton_up , imageDown: buton_down , imageOver: buton_over  },
 		IGpause:       { imageUp: IGpause , pressedOffsetX: -2 , pressedOffsetY: -2},
 		vCenter_small :{ imageUp: vCenter_small , pressedOffsetY: -3},
-		notification  :{ imageUp: knobST , pressedOffsetX: 2 , pressedOffsetY: 2},
+		notification  :{ imageUp: notification , pressedOffsetX: 2 , pressedOffsetY: 2},
 		
 	},
 	
