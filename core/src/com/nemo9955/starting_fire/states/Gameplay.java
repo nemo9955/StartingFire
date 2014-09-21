@@ -32,7 +32,7 @@ public class Gameplay extends InputAdapter implements Screen {
 		camera.setToOrtho(false);
 		camera.update();
 		viewport = new ScreenViewport(camera);
-		viewport.setUnitsPerPixel(1.9f);
+		viewport.setUnitsPerPixel(2.0f);
 
 		stage = new GamePlayStage();
 
@@ -46,7 +46,7 @@ public class Gameplay extends InputAdapter implements Screen {
 	public void show() {
 		Gdx.input.setInputProcessor(inputs);
 		stage.restart();
-		world = new World(15, 13, 127, 82);
+		world = new World(19, 15, 128, 83);
 	}
 
 	private long	startTime;

@@ -49,10 +49,9 @@ public class GamePlayStage extends Stage {
 	}
 
 	private void createHUD() {
+		hudNotifBut.setSize(40, 55);
+
 		hudHolder.addActor(hudMenuBut);
-		// TextureRegion vCen = Assets.ELEMENTS_PACK.asset(TextureAtlas.class).findRegion("vCenter", 0);
-		// hudCenter.setBackground(new TextureRegionDrawable(vCen));
-		// hudCenter.set
 		hudHolder.addActor(hudCenter);
 		hudHolder.addActor(hudNotifBut);
 

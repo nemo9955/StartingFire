@@ -26,6 +26,9 @@ import com.nemo9955.starting_fire.storage.SF;
 
 public class World implements Disposable {
 
+	private UpdateSystem	updSys		= new UpdateSystem();
+	private RenderSystem	rendSys		= new RenderSystem();
+
 	PooledEngine			engine		= new PooledEngine();
 	public EntityManager	manager		= new EntityManager(this);
 	public int				width, height, hexWidht, hexHeight;
@@ -41,10 +44,10 @@ public class World implements Disposable {
 		this.hexHeight = hexHeight;
 		map = new IntMap<Entity>(width * height);
 
-		generateNewWorldType();
+		engine.addSystem(rendSys);
+		engine.addSystem(updSys);
 
-		engine.addSystem(new RenderSystem());
-		engine.addSystem(new UpdateSystem());
+		generateNewWorldType();
 	}
 
 	public void generateNewWorldType() {

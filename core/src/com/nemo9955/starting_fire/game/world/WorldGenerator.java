@@ -8,6 +8,7 @@ import com.nemo9955.starting_fire.game.ashley.PreSorter;
 import com.nemo9955.starting_fire.game.ashley.components.CInfo;
 import com.nemo9955.starting_fire.game.ashley.components.CM;
 import com.nemo9955.starting_fire.game.tiles.BerriesFactory;
+import com.nemo9955.starting_fire.game.tiles.DecalFactory;
 import com.nemo9955.starting_fire.game.tiles.FireFactory;
 import com.nemo9955.starting_fire.game.tiles.HexBase;
 import com.nemo9955.starting_fire.game.tiles.TreesFactory;
@@ -157,11 +158,6 @@ public class WorldGenerator {
 
 	@SuppressWarnings("unchecked")
 	private static void addDetails() {
-		for (int q = 0; q < world.width; q++)
-			for (int r = 0; r < world.height; r++)
-				if ( q == world.width / 2 && r == world.height / 2 )
-					FireFactory.useElement(world.getHex(q, r));
-
 		Entity[] entities = world.engine.getEntitiesFor(Family.getFor(CInfo.class)).toArray(Entity.class);
 
 		for (Entity ent : entities)
@@ -172,6 +168,10 @@ public class WorldGenerator {
 			if ( CM.Info.get(ent).hex == HexBase.Grass && MathUtils.randomBoolean(0.06f) )
 				BerriesFactory.useElement(ent);
 
+		for (Entity ent : entities)
+			DecalFactory.useRandomElement(ent);
+
+		FireFactory.useElement(world.getHex(world.width / 2, world.height / 2));
 	}
 
 	public static enum GenType {

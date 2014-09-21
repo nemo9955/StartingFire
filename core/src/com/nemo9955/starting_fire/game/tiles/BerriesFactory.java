@@ -24,10 +24,10 @@ public class BerriesFactory {
 
 	public static void useElement( Entity entity ) {
 		CInfo in = CM.Info.get(entity);
-		if ( in.spot == Spot.empty )
-			in.spot = Spot.used;
-		else
+		if ( in.spot != Spot.empty )
 			return;
+		else
+			in.spot = Spot.used;
 		EntityManager manager = CM.Info.get(entity).world.manager;
 
 		manager.addTexture(entity, bush.random());
