@@ -69,7 +69,6 @@ public class Gameplay extends InputAdapter implements Screen {
 		stage.manage(delta);
 
 		if ( TimeUtils.nanoTime() - startTime > 1000000000 ) /* 1,000,000,000ns == one second */{
-			// Gdx.app.log("FPSLogger", "fps: " + Gdx.graphics.getFramesPerSecond());
 			Gdx.graphics.setTitle(Vars.title + " - FPS : " + Gdx.graphics.getFramesPerSecond());
 			startTime = TimeUtils.nanoTime();
 		}

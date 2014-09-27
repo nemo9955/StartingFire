@@ -19,8 +19,6 @@ import com.nemo9955.starting_fire.game.ashley.components.CInfo.Spot;
 import com.nemo9955.starting_fire.game.ashley.components.CM;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
 import com.nemo9955.starting_fire.game.events.Events;
-import com.nemo9955.starting_fire.game.notifications.NotWorckBench;
-import com.nemo9955.starting_fire.game.notifications.NotificationManager;
 import com.nemo9955.starting_fire.game.world.WorldGenerator.GenType;
 import com.nemo9955.starting_fire.storage.SF;
 
@@ -51,13 +49,11 @@ public class World implements Disposable {
 	}
 
 	public void generateNewWorldType() {
-		Events.clearAll();
-		Resources.reset();
+		Events.reset();
 		engine.removeAllEntities();
 		map.clear();
 		SF.gameplay.stage.restart();
 
-		NotificationManager.registerNotif(NotWorckBench.inst);
 		WorldGenerator.genWorld(this, GenType.RectLife);
 	}
 

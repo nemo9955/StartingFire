@@ -1,4 +1,4 @@
-package com.nemo9955.starting_fire.game.tiles;
+package com.nemo9955.starting_fire.game.tiles.factories;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -19,11 +19,13 @@ import com.nemo9955.starting_fire.game.ashley.components.CTimer;
 import com.nemo9955.starting_fire.game.ashley.components.CUpdate;
 import com.nemo9955.starting_fire.game.ashley.components.CUpdate.IUpdatable;
 import com.nemo9955.starting_fire.game.events.Events;
+import com.nemo9955.starting_fire.game.notifications.NotLumberJack;
+import com.nemo9955.starting_fire.game.notifications.NotificationManager;
 import com.nemo9955.starting_fire.game.stage.DefaultTileActor;
 import com.nemo9955.starting_fire.storage.Func;
 import com.nemo9955.starting_fire.storage.SF;
 
-public class FireFactory {
+public class FirePlace {
 
 	public static Entity		fire;
 
@@ -47,6 +49,8 @@ public class FireFactory {
 		// manager.addTelegraph(telegraph);TODO
 		fire = entity;
 		centerCamera();
+
+		NotificationManager.registerNotif(NotLumberJack.inst);
 
 	}
 
@@ -84,7 +88,7 @@ public class FireFactory {
 
 		i.world.manager.addUpdate(entity, update);
 
-		Events.Fire_Lit.call();
+		Events.Fire_Lit.addOne();
 	}
 
 	private static void extinguishFire( Entity entity ) {

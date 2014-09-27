@@ -15,7 +15,7 @@ public class CHit extends Component implements Poolable {
 
 	public static interface IHitable {
 
-		public void hit( Entity ent );
+		public void hit( Entity entity );
 
 	}
 

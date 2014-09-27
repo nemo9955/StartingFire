@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nemo9955.starting_fire.game.ashley.components.CActor.IActable;
-import com.nemo9955.starting_fire.game.tiles.FireFactory;
+import com.nemo9955.starting_fire.game.tiles.factories.FirePlace;
 import com.nemo9955.starting_fire.storage.SF;
 
 public class GamePlayStage extends Stage {
@@ -71,7 +71,7 @@ public class GamePlayStage extends Stage {
 										if ( hudMenuBut.isPressed() ) {
 											changeGroup(menuHolder);
 										} else if ( hudCenter.isPressed() ) {
-											FireFactory.centerCamera();
+											FirePlace.centerCamera();
 										}
 										else if ( hudNotifBut.isPressed() ) {
 											hudNotifScroll.setVisible(!hudNotifScroll.isVisible());

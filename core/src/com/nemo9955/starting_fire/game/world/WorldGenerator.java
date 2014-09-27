@@ -7,11 +7,11 @@ import com.nemo9955.starting_fire.game.ashley.EntityManager;
 import com.nemo9955.starting_fire.game.ashley.PreSorter;
 import com.nemo9955.starting_fire.game.ashley.components.CInfo;
 import com.nemo9955.starting_fire.game.ashley.components.CM;
-import com.nemo9955.starting_fire.game.tiles.BerriesFactory;
-import com.nemo9955.starting_fire.game.tiles.DecalFactory;
-import com.nemo9955.starting_fire.game.tiles.FireFactory;
 import com.nemo9955.starting_fire.game.tiles.HexBase;
-import com.nemo9955.starting_fire.game.tiles.TreesFactory;
+import com.nemo9955.starting_fire.game.tiles.factories.Berries;
+import com.nemo9955.starting_fire.game.tiles.factories.Decals;
+import com.nemo9955.starting_fire.game.tiles.factories.FirePlace;
+import com.nemo9955.starting_fire.game.tiles.factories.Trees;
 import com.nemo9955.starting_fire.storage.Func;
 
 public class WorldGenerator {
@@ -162,16 +162,16 @@ public class WorldGenerator {
 
 		for (Entity ent : entities)
 			if ( CM.Info.get(ent).hex == HexBase.Grass && MathUtils.randomBoolean(0.13f) )
-				TreesFactory.useElement(ent);
+				Trees.useElement(ent);
 
 		for (Entity ent : entities)
 			if ( CM.Info.get(ent).hex == HexBase.Grass && MathUtils.randomBoolean(0.06f) )
-				BerriesFactory.useElement(ent);
+				Berries.useElement(ent);
 
 		for (Entity ent : entities)
-			DecalFactory.useRandomElement(ent);
+			Decals.useRandomElement(ent);
 
-		FireFactory.useElement(world.getHex(world.width / 2, world.height / 2));
+		FirePlace.useElement(world.getHex(world.width / 2, world.height / 2));
 	}
 
 	public static enum GenType {

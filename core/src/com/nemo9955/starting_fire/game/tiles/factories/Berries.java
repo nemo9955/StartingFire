@@ -1,4 +1,4 @@
-package com.nemo9955.starting_fire.game.tiles;
+package com.nemo9955.starting_fire.game.tiles.factories;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -14,10 +14,10 @@ import com.nemo9955.starting_fire.game.ashley.components.CTexture;
 import com.nemo9955.starting_fire.game.ashley.components.CTimer;
 import com.nemo9955.starting_fire.game.ashley.components.CUpdate;
 import com.nemo9955.starting_fire.game.ashley.components.CUpdate.IUpdatable;
-import com.nemo9955.starting_fire.game.world.Resources;
+import com.nemo9955.starting_fire.game.events.Events;
 import com.nemo9955.starting_fire.storage.SF;
 
-public class BerriesFactory {
+public class Berries {
 
 	public static Array<AtlasRegion>	bush	= SF.atlas.findRegions("bush");
 	public static Array<AtlasRegion>	berry	= SF.atlas.findRegions("berry");
@@ -44,7 +44,7 @@ public class BerriesFactory {
 		t.tex.removeAll(berry, true);
 		entity.remove(CHit.class);
 
-		Resources.Berries.addAmount(pickAmount());
+		Events.Berries.addAmount(pickAmount());
 	}
 
 	private static void grownBerries( Entity entity ) {

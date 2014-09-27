@@ -75,7 +75,7 @@ public class NotificationManager {
 		current.setVisible(false);
 	}
 
-	public static void addNviewNotif( NotWorckBench not ) {
+	public static void addNviewNotif( Notification not ) {
 		addNotifToBar(not);
 		viewNotif(not);
 	}

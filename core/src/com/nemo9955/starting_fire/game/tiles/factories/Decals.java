@@ -1,4 +1,4 @@
-package com.nemo9955.starting_fire.game.tiles;
+package com.nemo9955.starting_fire.game.tiles.factories;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -8,9 +8,10 @@ import com.nemo9955.starting_fire.game.ashley.components.CInfo;
 import com.nemo9955.starting_fire.game.ashley.components.CInfo.Spot;
 import com.nemo9955.starting_fire.game.ashley.components.CM;
 import com.nemo9955.starting_fire.game.ashley.components.CTexture;
+import com.nemo9955.starting_fire.game.tiles.HexBase;
 import com.nemo9955.starting_fire.storage.SF;
 
-public class DecalFactory {
+public class Decals {
 
 	public static Array<AtlasRegion>	weeds	= SF.atlas.findRegions("weeds");
 	public static Array<AtlasRegion>	stones	= SF.atlas.findRegions("stones");
