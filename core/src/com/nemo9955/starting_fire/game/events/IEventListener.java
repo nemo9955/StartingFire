@@ -4,5 +4,7 @@ public interface IEventListener {
 
 	public void register();
 
-	public void called();
+	public void unregister();
+
+	public void called(int quantity);
 }

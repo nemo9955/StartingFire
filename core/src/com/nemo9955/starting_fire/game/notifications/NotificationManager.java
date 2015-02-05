@@ -12,75 +12,80 @@ import com.nemo9955.starting_fire.storage.SF;
 
 public class NotificationManager {
 
-	static Window			current		= new Window("empty", SF.skin);
-	static TextArea			lore		= new TextArea("empty field", SF.skin) {
+	static Notification currentNot = null;
 
-											@Override
-											public float getPrefWidth() {
-												return 400;
-											};
-										};
+	static Window notViewer = new Window("empty", SF.skin);
+	static TextArea lore = new TextArea("empty field", SF.skin) {
 
-	static TextButton		later		= new TextButton("Later", SF.skin);
+		@Override
+		public float getPrefWidth() {
+			return 400;
+		};
+	};
 
-	static ChangeListener	listener	= new ChangeListener() {
+	static TextButton later = new TextButton("Later", SF.skin);
 
-											@Override
-											public void changed( ChangeEvent event, Actor actor ) {
-												hideNotif();
-											}
-										};
+	static ChangeListener listener = new ChangeListener() {
+
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+			hideNotif();
+		}
+	};
 	static {
-		SF.gameplay.stage.hudHolder.addActor(current);
+		SF.gameplay.stage.hudHolder.addActor(notViewer);
 		lore.setTouchable(Touchable.disabled);
 		later.addListener(listener);
-		current.setVisible(false);
+		notViewer.setVisible(false);
 		// current.setModal(true);
-		current.setKeepWithinStage(true);
+		notViewer.setKeepWithinStage(true);
 	}
 
-	public static void registerNotif( Notification not ) {
+	public static void registerNotif(Notification not) {
 		not.reset();
-		if ( not instanceof IEventListener ) {
+		if (not instanceof IEventListener) {
 			((IEventListener) not).register();
 		}
 	}
 
-	public static void addNotifToBar( Notification not ) {
+	public static void addNotifToBar(Notification not) {
 		SF.gameplay.stage.hudNotifHolder.addActor(not.getButton());
 	}
 
-	public static void viewNotif( Notification not ) {
-		addNotifToBar(not);
+	public static void viewNotif(Notification not) {
+		// addNotifToBar(not);
+		currentNot = not;
 
 		GamePlayStage stage = SF.gameplay.stage;
-		current.clearChildren();
-		current.setVisible(true);
-		current.defaults().pad(10);
-		current.pad(40);
-		current.setTitle(not.getTitle());
+		notViewer.clearChildren();
+		notViewer.setVisible(true);
+		notViewer.defaults().pad(10);
+		notViewer.pad(40);
+		notViewer.setTitle(not.getTitle());
 		lore.setText(not.getLore());
 		lore.setPrefRows(/* lore.getLines() */4);
-		current.add(lore);
-		current.row();
-		current.add(not.getHolder());
-		current.row();
-		current.add(later);
-		current.pack();
-		current.setPosition((stage.getWidth() / 2)-current.getWidth()/2, (stage.getHeight() / 2)-current.getWidth()/2 );
+		notViewer.add(lore);
+		notViewer.row();
+		notViewer.add(not.getHolder());
+		notViewer.row();
+		notViewer.add(later);
+		notViewer.pack();
+		notViewer.setPosition((stage.getWidth() / 2) - notViewer.getWidth() / 2, (stage.getHeight() / 2) - notViewer.getWidth()
+				/ 2);
 
 	}
 
 	public static void hideNotif() {
-		current.setVisible(false);
+		notViewer.setVisible(false);
+		currentNot = null;
 	}
 
-	public static void addNviewNotif( Notification not ) {
+	public static void activateNotif(Notification not) {
 		addNotifToBar(not);
 		viewNotif(not);
 	}
 
-	public static void deleteNotif( Notification not ) {
+	public static void deleteNotif(Notification not) {
 		hideNotif();
 		SF.gameplay.stage.hudNotifHolder.removeActor(not.getButton());
 

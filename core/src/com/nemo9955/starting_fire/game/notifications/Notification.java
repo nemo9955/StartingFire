@@ -8,10 +8,10 @@ import com.nemo9955.starting_fire.storage.SF;
 
 public abstract class Notification {
 
-	private String		title	= "empty";
-	private String		lore	= "empty";
-	private ImageButton	barButt;
-	private Table		holder	= new Table(SF.skin);
+	private String title = "empty";
+	private String lore = "empty";
+	private ImageButton barButt;
+	private Table holder = new Table(SF.skin);
 
 	public Notification(ImageButton button) {
 		this.barButt = button;
@@ -23,7 +23,7 @@ public abstract class Notification {
 		return title;
 	}
 
-	public void setTitle( String title ) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
@@ -31,7 +31,7 @@ public abstract class Notification {
 		return lore;
 	}
 
-	public void setLore( String lore ) {
+	public void setLore(String lore) {
 		this.lore = lore;
 	}
 
@@ -47,12 +47,15 @@ public abstract class Notification {
 
 	}
 
-	private ChangeListener	listener	= new ChangeListener() {
+	private ChangeListener listener = new ChangeListener() {
 
-											@Override
-											public void changed( ChangeEvent event, Actor actor ) {
-												NotificationManager.viewNotif(Notification.this);
-											}
-										};
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+			if (NotificationManager.currentNot != Notification.this)
+				NotificationManager.viewNotif(Notification.this);
+			else
+				NotificationManager.hideNotif();
+		}
+	};
 
 }

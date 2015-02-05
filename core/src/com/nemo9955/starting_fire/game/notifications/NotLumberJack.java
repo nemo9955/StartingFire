@@ -16,22 +16,22 @@ import com.nemo9955.starting_fire.storage.SF;
 
 public class NotLumberJack extends Notification implements IEventListener {
 
-	public static NotLumberJack	inst	= new NotLumberJack();
+	public static NotLumberJack inst = new NotLumberJack();
 
-	private TextButton			makeBut	= new TextButton("Make Lumber Jack", SF.skin);
+	private TextButton makeBut = new TextButton("Make Lumber Jack", SF.skin);
 
-	final int					call_at	= 1;
-	int							current	= 0;
+	final int call_at = 3;
 
 	private NotLumberJack() {
 		super(new ImageButton(SF.skin.getDrawable("checked")));
-		setTitle("Make a LumberJack post !");
 		setLore("You are running out of wood. Why not make a place to process it ?");
+		setTitle("Make a LumberJack post !");
 		getHolder().add(makeBut);
+
 		makeBut.addListener(new ChangeListener() {
 
 			@Override
-			public void changed( ChangeEvent event, Actor actor ) {
+			public void changed(ChangeEvent event, Actor actor) {
 				Entity entity = FirePlace.fire;
 				CInfo i = CM.Info.get(entity);
 
@@ -43,17 +43,16 @@ public class NotLumberJack extends Notification implements IEventListener {
 	}
 
 	@Override
-	public void called() {
-		current++;
-		if ( current == call_at ) {
-			NotificationManager.addNviewNotif(this);
+	public void called(int quantity) {
+		if (quantity >= call_at) {
+			NotificationManager.activateNotif(this);
+			unregister();
 		}
 	}
 
 	@Override
 	public void reset() {
 		super.reset();
-		current = 0;
 	}
 
 	@Override
@@ -61,4 +60,8 @@ public class NotLumberJack extends Notification implements IEventListener {
 		Events.Fire_Lit.addListener(this);
 	}
 
+	@Override
+	public void unregister() {
+		Events.Fire_Lit.getListeners().removeValue(this, false);
+	}
 }

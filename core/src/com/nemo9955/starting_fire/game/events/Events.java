@@ -5,22 +5,17 @@ import com.badlogic.gdx.utils.Array;
 
 public enum Events {
 
-	Fire_Lit,
-	Meat(Gr.Food),
-	Smoked_Meat(Gr.Food),
-	Berries(Gr.Food),
-	Dried_Berries(Gr.Food),
-	Wood(Gr.Gather),
-	Clay(Gr.Gather), ;
+	Fire_Lit, Meat(Gr.Food), Smoked_Meat(Gr.Food), Berries(Gr.Food), Dried_Berries(Gr.Food), Wood(Gr.Gather), Clay(Gr.Gather), ;
 
 	Events(Gr type) {
 		type.array.add(this);
 	}
 
-	Events() {}
+	Events() {
+	}
 
-	private Array<IEventListener>	listeners	= new Array<IEventListener>(16);
-	private int						quantity	= 0;
+	private Array<IEventListener> listeners = new Array<IEventListener>(16);
+	private int quantity = 0;
 
 	public int getAmount() {
 		return quantity;
@@ -30,22 +25,22 @@ public enum Events {
 		setAmount(quantity + 1);
 	}
 
-	public void addAmount( int amount ) {
+	public void addAmount(int amount) {
 		setAmount(amount + quantity);
 	}
 
-	public void setAmount( int amount ) {
-		Gdx.app.log("Resources", toString() + " = " + getAmount());
+	public void setAmount(int amount) {
 		this.quantity = amount;
+		Gdx.app.log("Resources", toString() + " = " + getAmount());
 		for (IEventListener ev : getListeners())
-			ev.called();
+			ev.called(quantity);
 	}
 
 	public Array<IEventListener> getListeners() {
 		return listeners;
 	}
 
-	public void addListener( IEventListener listener ) {
+	public void addListener(IEventListener listener) {
 		listeners.add(listener);
 	}
 
@@ -64,7 +59,7 @@ public enum Events {
 	public static enum Gr {
 		Food, Armor, Weapon, Gather;
 
-		public Array<Events>	array	= new Array<Events>(5);
+		public Array<Events> array = new Array<Events>(5);
 	}
 
 }

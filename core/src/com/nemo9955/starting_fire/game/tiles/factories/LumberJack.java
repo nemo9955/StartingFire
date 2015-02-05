@@ -15,10 +15,10 @@ import com.nemo9955.starting_fire.storage.SF;
 
 public class LumberJack {
 
-	private static float	timer	= 1;
-	private static short	amount	= 10;
+	private static float timer = 5;
+	private static short amount = 10;
 
-	public static void useElement( Entity entity ) {
+	public static void useElement(Entity entity) {
 		entity = Func.findSpot(entity, Spot.empty);
 		EntityManager manager = CM.Info.get(entity).world.manager;
 
@@ -26,34 +26,34 @@ public class LumberJack {
 		manager.addHit(entity, hit);
 	}
 
-	private static IUpdatable	update	= new IUpdatable() {
+	private static IUpdatable update = new IUpdatable() {
 
-											@Override
-											public void update( Entity entity, float delta ) {
-												CTimer t = CM.Time.get(entity);
+		@Override
+		public void update(Entity entity, float delta) {
+			CTimer t = CM.Time.get(entity);
 
-												if ( t != null )
-													if ( t.time > 0 )
-														t.time -= delta;
-													else {
-														entity.remove(CUpdate.class);
-														CM.Info.get(entity).world.manager.addHit(entity, hit);
-													}
-											}
-										};
+			if (t != null)
+				if (t.time > 0)
+					t.time -= delta;
+				else {
+					entity.remove(CUpdate.class);
+					CM.Info.get(entity).world.manager.addHit(entity, hit);
+				}
+		}
+	};
 
-	private static IHitable		hit		= new IHitable() {
+	private static IHitable hit = new IHitable() {
 
-											@Override
-											public void hit( Entity entity ) {
-												EntityManager manager = CM.Info.get(entity).world.manager;
-												manager.addTimer(entity, timer);
-												manager.addUpdate(entity, update);
+		@Override
+		public void hit(Entity entity) {
+			EntityManager manager = CM.Info.get(entity).world.manager;
+			manager.addTimer(entity, timer);
+			manager.addUpdate(entity, update);
 
-												Events.Wood.addAmount(amount);
+			Events.Wood.addAmount(amount);
 
-												entity.remove(CHit.class);
-											}
-										};
+			entity.remove(CHit.class);
+		}
+	};
 
 }
