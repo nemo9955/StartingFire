@@ -1,6 +1,5 @@
 package com.nemo9955.starting_fire.game.ashley;
 
-import com.badlogic.ashley.core.ComponentType;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
@@ -18,10 +17,7 @@ import com.nemo9955.starting_fire.storage.SF;
 public class RenderSystem extends EntitySystem {
 
 	@SuppressWarnings("unchecked")
-	private Family					family	= Family.getFor(
-														ComponentType.getBitsFor(CPosition.class, CInfo.class),
-														ComponentType.getBitsFor(CTexture.class, CAnimation.class, CCollision.class),
-														ComponentType.getBitsFor());
+	private Family					family	= Family.all(CPosition.class, CInfo.class).one(CTexture.class, CAnimation.class, CCollision.class).get();
 	public boolean					render	= true;
 	private ImmutableArray<Entity>	entities;
 

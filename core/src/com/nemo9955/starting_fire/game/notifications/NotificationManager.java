@@ -67,7 +67,7 @@ public class NotificationManager {
 		current.row();
 		current.add(later);
 		current.pack();
-		current.setCenterPosition((stage.getWidth() / 2), ((stage.getHeight() / 2)));
+		current.setPosition((stage.getWidth() / 2)-current.getWidth()/2, (stage.getHeight() / 2)-current.getWidth()/2 );
 
 	}
 

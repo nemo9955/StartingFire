@@ -10,10 +10,10 @@ public class DesktopLauncher {
 	public static void main( String[] arg ) {
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 850;
-		config.height = 600;
+		config.width = 1250;
+		config.height = 800;
 		config.backgroundFPS = 30;
-		config.foregroundFPS = 0;
+		config.foregroundFPS = 60;
 		config.vSyncEnabled = false;
 		config.title = Vars.title;
 

@@ -114,7 +114,7 @@ public class World implements Disposable {
 
 	public void hit( float x, float y ) {
 		@SuppressWarnings("unchecked")
-		ImmutableArray<Entity> ents = engine.getEntitiesFor(Family.getFor(CCollision.class));
+		ImmutableArray<Entity> ents = engine.getEntitiesFor(Family.one(CCollision.class).get());
 
 		for (int i = 0; i < ents.size(); i++) {
 			CCollision col = CM.Col.get(ents.get(i));

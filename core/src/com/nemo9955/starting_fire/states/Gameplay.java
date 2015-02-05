@@ -1,6 +1,7 @@
 package com.nemo9955.starting_fire.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -83,7 +84,7 @@ public class Gameplay extends InputAdapter implements Screen {
 
 	@Override
 	public boolean touchDown( int screenX, int screenY, int pointer, int button ) {
-		if ( button == 2 ) {
+		if ( button == Buttons.RIGHT ) {
 			Ray ray = camera.getPickRay(screenX, screenY);
 			world.hit(ray.origin.x, ray.origin.y);
 		}

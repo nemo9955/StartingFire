@@ -19,7 +19,7 @@ public enum Events {
 
 	Events() {}
 
-	private Array<IEventListener>	listeners	= new Array<IEventListener>(1);
+	private Array<IEventListener>	listeners	= new Array<IEventListener>(16);
 	private int						quantity	= 0;
 
 	public int getAmount() {

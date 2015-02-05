@@ -2,6 +2,7 @@ package com.nemo9955.starting_fire.game.world;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.MathUtils;
 import com.nemo9955.starting_fire.game.ashley.EntityManager;
 import com.nemo9955.starting_fire.game.ashley.PreSorter;
@@ -156,9 +157,9 @@ public class WorldGenerator {
 
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked") 
 	private static void addDetails() {
-		Entity[] entities = world.engine.getEntitiesFor(Family.getFor(CInfo.class)).toArray(Entity.class);
+		ImmutableArray<Entity> entities = world.engine.getEntitiesFor(Family.one(CInfo.class).get());
 
 		for (Entity ent : entities)
 			if ( CM.Info.get(ent).hex == HexBase.Grass && MathUtils.randomBoolean(0.13f) )

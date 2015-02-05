@@ -12,7 +12,7 @@ public class UpdateSystem extends IteratingSystem {
 
 	@SuppressWarnings("unchecked")
 	public UpdateSystem() {
-		super(Family.getFor(CUpdate.class));
+		super(Family.one(CUpdate.class).get());
 	}
 
 	@Override

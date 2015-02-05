@@ -9,20 +9,20 @@
 	 },
 	
 	 com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	        arial:     { file: fonts/arial_32.fnt }, 
+	        D_OLD_MODERN1:{ file: fonts/D_OLD_MODERN1_32.fnt }, 
 	},
 	
 	com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-	        default:   { font: arial, fontColor: white },
-	        black:     { font: arial, fontColor: black },
+	        default:   { font: D_OLD_MODERN1, fontColor: white },
+	        black:     { font: D_OLD_MODERN1, fontColor: black },
 	},
 	
 	 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-	        default:    { up: buton_up, down: buton_down, over:buton_over , font: arial },
+	        default:    { up: buton_up, down: buton_down, over:buton_over , font: D_OLD_MODERN1 },
 	},
 	
 	com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
-		default : { font : arial , checkboxOn : checked , checkboxOff : unchecked },
+		default : { font : D_OLD_MODERN1 , checkboxOn : checked , checkboxOff : unchecked },
 	},
 	
 	com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
@@ -39,7 +39,7 @@
 	},
 	
 	com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
-	    default:{ font: arial, fontColorUnselected: white, fontColorSelected: black , selection : pix50}
+	    default:{ font: D_OLD_MODERN1, fontColorUnselected: white, fontColorSelected: black , selection : pix50}
 	},
 	
 	com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle:{
@@ -56,15 +56,15 @@
 	},
 	
 	com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle:{
-		default:{ font:arial, fontColor:gray ,	focusedFontColor:blue , disabledFontColor:white , messageFontColor:red  , background:pix80 , focusedBackground:pix50 , disabledBackground:pix30 }
-	},
-	
-	com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle:{
-		default:{font:arial	, imageUp : mover-knob  , up: buton_up, down: buton_down, over:buton_over  }
+		default:{ font: D_OLD_MODERN1, fontColor:gray ,	focusedFontColor:blue , disabledFontColor:white , messageFontColor:red  , background:pix80 , focusedBackground:pix50 , disabledBackground:pix30 }
 	},
 	
 	com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle:{
-		default:{ titleFont : arial	, background: pix30  },
-		error:{ titleFont : arial , titleFontColor:black	, background: pix100  }
-	}
+		default:{ titleFont: D_OLD_MODERN1	, background: pix30  },
+		error:{ titleFont: D_OLD_MODERN1 , titleFontColor:black	, background: pix100  },
+	},
+	
+	com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle:{
+		default:{ font: D_OLD_MODERN1	, imageUp : mover-knob  , up: buton_up, down: buton_down, over:buton_over  },
+	},
 }
