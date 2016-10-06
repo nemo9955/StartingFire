@@ -15,7 +15,7 @@ import com.nemo9955.starting_fire.utils.CircularGroup;
 
 public class DefaultTileActor implements IActable {
 
-	CircularGroup	actor;
+	CircularGroup actor;
 
 	public DefaultTileActor(Entity entity) {
 		EntityManager manager = CM.Info.get(entity).world.manager;
@@ -23,7 +23,7 @@ public class DefaultTileActor implements IActable {
 		actor = new CircularGroup(SF.shapeRend) {
 
 			@Override
-			public void setVisible( boolean visible ) {
+			public void setVisible(boolean visible) {
 				super.setVisible(visible);
 				SF.gameplay.activateAllInputes(!visible);
 			}
@@ -39,10 +39,10 @@ public class DefaultTileActor implements IActable {
 		SF.gameplay.stage.addEntActor(this);
 	}
 
-	private static Vector3	tpC1	= new Vector3();
+	private static Vector3 tpC1 = new Vector3();
 
 	@Override
-	public void resize( int width, int height ) {
+	public void resize(int width, int height) {
 		CActor act = CM.Act.get((Entity) actor.getUserObject());
 		CPosition poz = CM.Pos.get((Entity) actor.getUserObject());
 		CInfo i = CM.Info.get((Entity) actor.getUserObject());
@@ -55,18 +55,17 @@ public class DefaultTileActor implements IActable {
 		return actor;
 	}
 
-	private static IHitable	hit	= new IHitable() {
+	private static IHitable hit = new IHitable() {
 
-									@Override
-									public void hit( Entity ent ) {
-										CActor act = CM.Act.get(ent);
-										CPosition poz = CM.Pos.get(ent);
-										CInfo i = CM.Info.get(ent);
-										SF.gameplay.camera.project(tpC1.set(poz.x + i.world.hexWidht / 2, poz.y + i.world.hexHeight / 2,
-													0));
-										act.actor.getGroup().setPosition(tpC1.x, tpC1.y);
-										act.actor.getGroup().setVisible(!act.actor.getGroup().isVisible());
+		@Override
+		public void hit(Entity ent) {
+			CActor act = CM.Act.get(ent);
+			CPosition poz = CM.Pos.get(ent);
+			CInfo i = CM.Info.get(ent);
+			SF.gameplay.camera.project(tpC1.set(poz.x + i.world.hexWidht / 2, poz.y + i.world.hexHeight / 2, 0));
+			act.actor.getGroup().setPosition(tpC1.x, tpC1.y);
+			act.actor.getGroup().setVisible(!act.actor.getGroup().isVisible());
 
-									}
-								};
+		}
+	};
 }

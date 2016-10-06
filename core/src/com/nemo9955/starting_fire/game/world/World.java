@@ -128,10 +128,10 @@ public class World implements Disposable {
 					CTexture tex = CM.Tex.get(ents.get(i));
 					if ( tex != null ) {
 						AtlasRegion hili = SF.atlas.findRegion("tile_highlight");
-						if ( tex.tex.contains(hili, true) )
-							tex.tex.removeValue(hili, true);
+						if ( tex.contains(hili, true) )
+							tex.removeValue(hili, true);
 						else
-							tex.tex.add(hili);
+							tex.add(hili);
 					}
 				}
 				break;

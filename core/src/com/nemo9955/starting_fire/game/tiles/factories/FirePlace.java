@@ -65,8 +65,8 @@ public class FirePlace {
 		CTexture tex = CM.Tex.get(entity);
 		CInfo i = CM.Info.get(entity);
 		if (tex != null)
-			if (tex.tex.contains(fireUnlit, true))
-				tex.tex.removeValue(fireUnlit, true);
+			if (tex.contains(fireUnlit, true))
+				tex.removeValue(fireUnlit, true);
 
 		CAnimation anim = CM.Anim.get(entity);
 		if (anim != null)
@@ -88,7 +88,7 @@ public class FirePlace {
 
 	private static void extinguishFire(Entity entity) {
 		CTexture tex = CM.Tex.get(entity);
-		tex.tex.add(fireUnlit);
+		tex.add(fireUnlit);
 		entity.remove(CUpdate.class);
 		entity.remove(CAnimation.class);
 		entity.remove(CTimer.class);

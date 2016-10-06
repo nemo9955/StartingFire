@@ -38,25 +38,28 @@ public class RenderSystem extends EntitySystem {
 	@Override
 	public void update( float deltaTime ) {
 
-		for (int i = 0; i < entities.size(); i++) {
-			Entity entity = entities.get(i);
-			CPosition po = CM.Pos.get(entity);
-			CTexture tex = CM.Tex.get(entity);
-
-			if ( tex != null ) {
-				// for (TextureRegion texture : tex.tex)
-				TextureRegion texture = tex.tex.first();
-				SF.spritesBatch.draw(texture, po.x, po.y, texture.getRegionWidth(), texture.getRegionHeight());
-			}
-		}
-
+//		for (int i = 0; i < entities.size(); i++) {
+//			Entity entity = entities.get(i);
+//			CPosition po = CM.Pos.get(entity);
+//			CTexture tex = CM.Tex.get(entity);
+//
+//			if ( tex != null ) {
+//				// for (TextureRegion texture : tex.tex)
+//				TextureRegion texture = tex.tex.first();
+//				SF.spritesBatch.draw(texture, po.x, po.y, texture.getRegionWidth(), texture.getRegionHeight());
+//			}
+//		}
+		
+		//TODO MAKE sure everything renders in the correct order
+		
+		
 		for (int i = 0; i < entities.size(); i++) {
 			Entity entity = entities.get(i);
 			CPosition po = CM.Pos.get(entity);
 			CTexture tex = CM.Tex.get(entity);
 			if ( tex != null )
-				for (int t = 1; t < tex.tex.size; t++) {
-					TextureRegion texture = tex.tex.get(t);
+				for (int t = 0; t < tex.size; t++) {
+					TextureRegion texture = tex.get(t);
 					SF.spritesBatch.draw(texture, po.x, po.y, texture.getRegionWidth(), texture.getRegionHeight());
 				}
 

@@ -7,46 +7,47 @@
 	        green: { r: 0, g: 1, b: 0, a: 1 },
 	        blue:  { r: 0, g: 0, b: 1, a: 1 }
 	 },
-	
+
 	 com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	        ARIAL_D:{ file: fonts/arian26.fnt }, 
+	        ARIAL_D:{ file: fonts/arian26.fnt },
+	        ARIAL_CHANGED:{ file: fonts/arian26.fnt },
 	},
-	
+
 	com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-	        default:   { font: D_OLD_MODERN_D, fontColor: white },
-	        black:     { font: D_OLD_MODERN_D, fontColor: black },
+	        default:   { font: ARIAL_CHANGED, fontColor: white },
+	        black:     { font: ARIAL_CHANGED, fontColor: black },
 	},
-	
+
 	 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	        default:    { up: buton_up, down: buton_down, over:buton_over , font: ARIAL_D },
 	},
-	
+
 	com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
-		default : { font : D_OLD_MODERN_D , checkboxOn : checked , checkboxOff : unchecked },
+		default : { font : ARIAL_CHANGED , checkboxOn : checked , checkboxOff : unchecked },
 	},
-	
+
 	com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 		default-vertical : { handle : element1 },
 		default-horizontal : { handle : element1 },
 	},
-	
+
 	com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle:{
 		default:       { imageUp: buton_up , imageDown: buton_down , imageOver: buton_over  },
 		IGpause:       { imageUp: IGpause , pressedOffsetX: -2 , pressedOffsetY: -2},
 		vCenter_small :{ imageUp: vCenter_small , pressedOffsetY: -3},
 		notification  :{ imageUp: notification , pressedOffsetX: 2 , pressedOffsetY: 2},
-		
+
 	},
-	
+
 	com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
-	    default:{ font: D_OLD_MODERN_D, fontColorUnselected: white, fontColorSelected: black , selection : pix50}
+	    default:{ font: ARIAL_CHANGED, fontColorUnselected: white, fontColorSelected: black , selection : pix50}
 	},
-	
+
 	com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle:{
 		default:{ background: element2  },
 		clear:{   background: pix30  }
 	},
-	
+
 	com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle:{
 		default:{ background:mover-bg , knob: mover-knob }
 	},
@@ -54,17 +55,17 @@
 	com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle:{
 		default-vertical:{ background:element1 , disabledBackground:element2 , knob: mover-knob }
 	},
-	
+
 	com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle:{
-		default:{ font: D_OLD_MODERN_D, fontColor:gray ,	focusedFontColor:blue , disabledFontColor:white , messageFontColor:red  , background:pix80 , focusedBackground:pix50 , disabledBackground:pix30 }
+		default:{ font: ARIAL_CHANGED, fontColor:gray ,	focusedFontColor:blue , disabledFontColor:white , messageFontColor:red  , background:pix80 , focusedBackground:pix50 , disabledBackground:pix30 }
 	},
-	
-	//com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle:{
-	//	default:{ titleFont: D_OLD_MODERN_D	, background: pix30  },
-	//	error:{ titleFont: ARIAL_D , titleFontColor:black	, background: pix100  },
-	//},
-	
-	//com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle:{
-	//	default:{ font: ARIAL_D	, imageUp : mover-knob  , up: buton_up, down: buton_down, over:buton_over  },
-	//},
+
+	com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle:{
+		default:{ titleFont: ARIAL_CHANGED	, background: pix30  },
+		error:{ titleFont: ARIAL_D , titleFontColor:black	, background: pix100  },
+	},
+
+	com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle:{
+		default:{ font: ARIAL_D	, imageUp : mover-knob  , up: buton_up, down: buton_down, over:buton_over  },
+	},
 }

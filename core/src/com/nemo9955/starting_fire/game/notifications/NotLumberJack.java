@@ -34,8 +34,8 @@ public class NotLumberJack extends Notification implements IEventListener {
 			public void changed(ChangeEvent event, Actor actor) {
 				Entity entity = FirePlace.fire;
 				CInfo i = CM.Info.get(entity);
-
 				CCoordinate co = CM.Coor.get(entity);
+				
 				LumberJack.useElement(i.world.getHex(co.q + 3, co.r - 1));
 				NotificationManager.deleteNotif(NotLumberJack.this);
 			}

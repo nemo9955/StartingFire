@@ -25,9 +25,9 @@ public class Decals {
 
 		CTexture te = CM.Tex.get(entity);
 		if ( in.hex == HexBase.Grass && MathUtils.randomBoolean(0.4f) )
-			te.tex.insert(1, weeds.random());
+			te.insert(1, weeds.random());
 		else if ( in.hex == HexBase.Dirt && MathUtils.randomBoolean(0.15f) )
-			te.tex.insert(1, stones.random());
+			te.insert(1, stones.random());
 
 	}
 

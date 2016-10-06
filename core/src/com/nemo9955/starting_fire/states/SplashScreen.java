@@ -53,14 +53,6 @@ public class SplashScreen extends ScreenAdapter {
 		SF.skin.addRegions(Assets.SKIN_ATLAS.asset(TextureAtlas.class));
 		SF.skin.load(Gdx.files.internal("img/skinset.json"));
 		
-		
-		//FIXME added windowStyle programmatically until possible bug is fixed
-		
-		WindowStyle wsd = new WindowStyle(SF.skin.getFont("D_OLD_MODERN_D"), Color.CYAN, SF.skin.getDrawable("pix30"));
-		WindowStyle wse = new WindowStyle(SF.skin.getFont("ARIAL_D"), Color.BLACK, SF.skin.getDrawable("pix100"));
-
-		SF.skin.add("default", wsd, WindowStyle.class);
-		SF.skin.add("error", wse, WindowStyle.class);
 
 		SF.mainMenu = new MainMenu();
 		SF.gameplay = new Gameplay();

@@ -41,7 +41,7 @@ public class Berries {
 		i.world.manager.addUpdate(entity, update);
 
 		CTexture t = CM.Tex.get(entity);
-		t.tex.removeAll(berry, true);
+		t.removeAll(berry, true);
 		entity.remove(CHit.class);
 
 		Events.Berries.addAmount(pickAmount());

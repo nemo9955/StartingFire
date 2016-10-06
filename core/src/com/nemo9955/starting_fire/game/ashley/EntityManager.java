@@ -21,71 +21,71 @@ import com.nemo9955.starting_fire.game.world.World;
 
 public class EntityManager {
 
-	private World	world;
+	private World world;
 
 	public EntityManager(World world) {
 		this.world = world;
 	}
 
-	public EntityManager addTimer( Entity entity, float time ) {
+	public EntityManager addTimer(Entity entity, float time) {
 		CTimer tm = world.createComponent(CTimer.class);
 		tm.time = time;
 		entity.add(tm);
 		return this;
 	}
 
-	public EntityManager addTelegraph( Entity entity, Telegraph teleg ) {
+	public Telegraph addTelegraph1(Entity entity) {
 		CTelegraph tel = world.createComponent(CTelegraph.class);
-		tel.tel = teleg;
+		// tel.compareTo(other) = teleg;
 		entity.add(tel);
-		return this;
+		return (Telegraph) tel;
 	}
 
-	public EntityManager addHit( Entity entity, IHitable interact ) {
+	public EntityManager addHit(Entity entity, IHitable interact) {
 		CHit inter = world.createComponent(CHit.class);
 		inter.hitter = interact;
 		entity.add(inter);
 		return this;
 	}
 
-	public EntityManager addUpdate( Entity entity, IUpdatable upd ) {
+	public EntityManager addUpdate(Entity entity, IUpdatable upd) {
 		CUpdate update = world.createComponent(CUpdate.class);
 		update.update = upd;
 		entity.add(update);
 		return this;
 	}
 
-	public EntityManager addActor( Entity entity, IActable actor ) {
+	public EntityManager addActor(Entity entity, IActable actor) {
 		CActor act = world.createComponent(CActor.class);
 		act.actor = actor;
 		entity.add(act);
 		return this;
 	}
 
-	public EntityManager addAnimation( Entity entity, Animation animation ) {
+	public EntityManager addAnimation(Entity entity, Animation animation) {
 		CAnimation anim = world.createComponent(CAnimation.class);
 		anim.anim = animation;
 		entity.add(anim);
 		return this;
 	}
 
-	public EntityManager addCollision( Entity entity, float x, float y, float width, float height ) {
+	public EntityManager addCollision(Entity entity, float x, float y, float width, float height) {
 		CCollision col = world.createComponent(CCollision.class);
 		col.setColide(x, y, width, height);
 		entity.add(col);
 		return this;
 	}
 
-	public EntityManager addTexture( Entity entity, TextureRegion region ) {
+	public EntityManager addTexture(Entity entity, TextureRegion region) {
 		CTexture tex = entity.getComponent(CTexture.class);
-		if ( tex == null )
+		if (tex == null)
 			tex = world.createComponent(CTexture.class);
-		tex.tex.add(region);
+		tex.add(region);
 		entity.add(tex);
 		return this;
 	}
 
-	public EntityManager addPosition( Entity entity, float x, float y ) {
+	public EntityManager addPosition(Entity entity, float x, float y) {
 		CPosition poz = world.createComponent(CPosition.class);
 		poz.x = x;
 		poz.y = y;
@@ -93,7 +93,7 @@ public class EntityManager {
 		return this;
 	}
 
-	public EntityManager addCoordinates( Entity entity, int q, int r ) {
+	public EntityManager addCoordinates(Entity entity, int q, int r) {
 		CCoordinate coo = world.createComponent(CCoordinate.class);
 		coo.r = r;
 		coo.q = q;
