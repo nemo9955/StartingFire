@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
-public class CTexture extends Component implements Poolable {
+public class CTexture  implements Poolable,Component {
 
 	public Array<TextureRegion>	tex	= new Array<TextureRegion>(1);
 

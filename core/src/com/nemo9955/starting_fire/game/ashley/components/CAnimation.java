@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
-public class CAnimation extends Component implements Poolable {
+public class CAnimation  implements Poolable,Component {
 
 	public Animation	anim;
 

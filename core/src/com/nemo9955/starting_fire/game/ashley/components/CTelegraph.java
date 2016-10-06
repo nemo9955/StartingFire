@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
-public class CTelegraph extends Component implements Poolable {
+public class CTelegraph  implements Poolable,Component {
 
 	public Telegraph	tel;
 

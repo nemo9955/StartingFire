@@ -11,7 +11,7 @@ import com.nemo9955.starting_fire.storage.SF;
 
 public class MenuController extends ScreenAdapter {
 
-	public StateMachine<MenuController>	mst		= new StackStateMachine<MenuController>(this);
+	public StateMachine<MenuController, MainMenu>	mst		= new StackStateMachine<MenuController, MainMenu>(this);
 
 	final Stage							stage	= new Stage(new ScreenViewport(), SF.spritesBatch);
 

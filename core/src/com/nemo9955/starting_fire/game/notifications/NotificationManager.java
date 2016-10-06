@@ -61,7 +61,7 @@ public class NotificationManager {
 		notViewer.setVisible(true);
 		notViewer.defaults().pad(10);
 		notViewer.pad(40);
-		notViewer.setTitle(not.getTitle());
+		notViewer.getTitleLabel().setText(not.getTitle());
 		lore.setText(not.getLore());
 		lore.setPrefRows(/* lore.getLines() */4);
 		notViewer.add(lore);

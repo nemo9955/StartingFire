@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
-public class CUpdate extends Component implements Poolable {
+public class CUpdate  implements Poolable,Component {
 
 	public IUpdatable	update;
 

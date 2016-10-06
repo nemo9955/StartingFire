@@ -19,7 +19,7 @@ public class Func {
 			return entity;
 		}
 
-		int[] ofs = Func.getNeig(inf.world);
+		int[] ofs = Func.getNeighbor(inf.world);
 		for (int i = 0; i < ofs.length; i += 2) {
 			Entity ent = inf.world.getHex(co.q + ofs[i], co.r + ofs[i + 1]);
 			CInfo ie = CM.Info.get(ent);
@@ -32,7 +32,7 @@ public class Func {
 		return entity;
 	}
 
-	public static int[] getNeig( World world ) {
+	public static int[] getNeighbor( World world ) {
 		if ( world.offsetPlace )
 			return Vars.neiOfs;
 		return Vars.neiAxi;

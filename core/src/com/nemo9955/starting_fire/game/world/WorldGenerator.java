@@ -41,7 +41,7 @@ public class WorldGenerator {
 	}
 
 	static void generateNoiseWorld() {
-		int[] ofs = Func.getNeig(world);
+		int[] ofs = Func.getNeighbor(world);
 		float chanceAllive = 0.4f;
 		int birthLimit = 4;
 		int deathLimit = 4;
@@ -122,7 +122,7 @@ public class WorldGenerator {
 		PreSorter.end(world.engine);
 	}
 
-	static void generateHoneyComb( int radius ) {
+	static void generateHoneyComb( int radius )  {
 		world.offsetPlace = false;
 		PreSorter.begin();
 		PreSorter.add(makeHex(HexBase.Grass, 0, 0));

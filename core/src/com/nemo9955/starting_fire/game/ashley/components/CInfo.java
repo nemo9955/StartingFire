@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Pool.Poolable;
 import com.nemo9955.starting_fire.game.tiles.HexBase;
 import com.nemo9955.starting_fire.game.world.World;
 
-public class CInfo extends Component implements Poolable {
+public class CInfo  implements Poolable,Component {
 
 	public World	world;
 	public Spot		spot	= Spot.empty;

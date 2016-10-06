@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Pool.Poolable;
  * @author nemo9955
  *
  */
-public class CCoordinate extends Component implements Poolable {
+public class CCoordinate  implements Poolable,Component {
 
 	/**
 	 * goes from right-up to left-down

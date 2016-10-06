@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
-public class CCollision extends Component implements Poolable {
+public class CCollision  implements Poolable,Component {
 
 	public Rectangle	bound	= new Rectangle();
 	public Ellipse		colide	= new Ellipse();	// TODO make this more accurate (if needed)
