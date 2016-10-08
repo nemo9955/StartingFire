@@ -5,7 +5,7 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 
 public class PackResourcesSF {
 
-	public static void main( String[] args ) {
+	public static void main(String[] args) {
 
 		Settings param = new Settings();
 		param.duplicatePadding = true;
@@ -14,11 +14,12 @@ public class PackResourcesSF {
 		param.limitMemory = false;
 		param.edgePadding = true;
 
-		TexturePacker.process(param, "/home/nemo9955/CodeStation/SF materials/hexas",
-					"/home/nemo9955/CodeStation/proiecteJava/StartingFire/android/assets/img", "hexaset");
+		// TexturePacker.process(param, "../RAWassets/hexas",
+		// "../core/assets/img", "hexaset");
+		// TexturePacker.process(param, "../RAWassets/menu",
+		// "../core/assets/img", "skinset");
 
-		TexturePacker.process(param, "/home/nemo9955/CodeStation/SF materials/menu",
-					"/home/nemo9955/CodeStation/proiecteJava/StartingFire/android/assets/img", "skinset");
+		TexturePacker.process(param, "../RAWassets", "../core/assets/img", "sprites");
 	}
 
 }

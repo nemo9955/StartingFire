@@ -8,8 +8,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public enum Assets {
 
-	HEXAS("img/hexaset.atlas", TextureAtlas.class), //
-	SKIN_ATLAS("img/skinset.atlas", TextureAtlas.class), //
+	// _HEXAS("img/all.atlas", TextureAtlas.class), //
+	// _SKIN_ATLAS("img/skinset.atlas", TextureAtlas.class), //
+	ALL("img/sprites.atlas", TextureAtlas.class), //
 	D_OLD_MODERN("fonts/D_OLD_MODERN.ttf", FreeTypeFontGenerator.class);//
 	// ARIAL("fonts/arial_32.fnt", BitmapFont.class),//
 	// SKIN_JSON("img/skinset.json", Skin.class); //

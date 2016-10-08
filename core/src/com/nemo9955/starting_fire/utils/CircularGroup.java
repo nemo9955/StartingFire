@@ -256,8 +256,8 @@ public class CircularGroup extends WidgetGroup {
 	 * 
 	 * @param distance
 	 *            : the distance from the center
-	 * @param height
-	 *            : the height of the element
+	 * @param maxHeight
+	 *            : the maxHeight of the element
 	 * @return the angle for which the elements don't collide
 	 */
 

@@ -1,6 +1,7 @@
 package com.nemo9955.starting_fire.game.ashley;
 
 import java.util.Comparator;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.Array;

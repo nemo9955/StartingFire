@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.nemo9955.starting_fire.storage.SF;
 
-public enum HexBase {
+public enum TileTypes {
 
 	Dirt, Gravel, Grass, Water, Sand;
 
@@ -17,7 +17,7 @@ public enum HexBase {
 		return SF.atlas.findRegion(toString());
 	}
 
-	public static HexBase getRandomValue() {
+	public static TileTypes getRandomValue() {
 		return values()[MathUtils.random(values().length - 1)];
 	}
 

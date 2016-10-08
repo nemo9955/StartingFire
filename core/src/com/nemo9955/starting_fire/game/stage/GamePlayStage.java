@@ -1,5 +1,6 @@
 package com.nemo9955.starting_fire.game.stage;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -9,35 +10,33 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.nemo9955.starting_fire.game.ashley.components.CActor.IActable;
-import com.nemo9955.starting_fire.game.tiles.factories.FirePlace;
+import com.nemo9955.starting_fire.storage.Func;
 import com.nemo9955.starting_fire.storage.SF;
 
 public class GamePlayStage extends Stage {
 
-	private Group			currentGroup;
+	private Group currentGroup;
 
-	ImageButton				hudNotifBut		= new ImageButton(SF.skin, "notification");
-	public HorizontalGroup	hudNotifHolder	= new HorizontalGroup();
-	ScrollPane				hudNotifScroll	= new ScrollPane(hudNotifHolder);
-	ImageButton				hudMenuBut		= new ImageButton(SF.skin, "IGpause");
-	ImageButton				hudCenter		= new ImageButton(SF.skin, "vCenter_small");
-	public Group			hudHolder		= new Group() {
+	ImageButton hudNotifBut = new ImageButton(SF.skin, "notification");
+	public HorizontalGroup hudNotifHolder = new HorizontalGroup();
+	ScrollPane hudNotifScroll = new ScrollPane(hudNotifHolder);
+	ImageButton hudMenuBut = new ImageButton(SF.skin, "IGpause");
+	public ImageButton hudCenter = new ImageButton(SF.skin, "vCenter_small");
+	public Group hudHolder = new Group() {
 
-												@Override
-												public void setVisible( boolean visible ) {
-													super.setVisible(visible);
-													SF.gameplay.activateAllInputes(visible);
-												}
-											};
+		@Override
+		public void setVisible(boolean visible) {
+			super.setVisible(visible);
+			SF.gameplay.activateAllInputes(visible);
+		}
+	};
 
-	TextButton				menuResume		= new TextButton("Resume", SF.skin);
-	TextButton				menuMMenu		= new TextButton("Main Menu", SF.skin);
-	public Table			menuHolder		= new Table(SF.skin);
+	TextButton menuResume = new TextButton("Resume", SF.skin);
+	TextButton menuMMenu = new TextButton("Main Menu", SF.skin);
+	public Table menuHolder = new Table(SF.skin);
 
-	private Array<IActable>	entActors		= new Array<IActable>();
+	// private Array<IActable> entActors = new Array<IActable>();
 
 	public GamePlayStage() {
 		super(new ScreenViewport(), SF.spritesBatch);
@@ -64,21 +63,21 @@ public class GamePlayStage extends Stage {
 		addActor(hudHolder);
 	}
 
-	ChangeListener	hudListener	= new ChangeListener() {
+	ChangeListener hudListener = new ChangeListener() {
 
-									@Override
-									public void changed( ChangeEvent event, Actor actor ) {
-										if ( hudMenuBut.isPressed() ) {
-											changeGroup(menuHolder);
-										} else if ( hudCenter.isPressed() ) {
-											FirePlace.centerCamera();
-										}
-										else if ( hudNotifBut.isPressed() ) {
-											hudNotifScroll.setVisible(!hudNotifScroll.isVisible());
-										}
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+			if (hudMenuBut.isPressed()) {
+				changeGroup(menuHolder);
+			} else if (hudCenter.isPressed()) {
+				Entity entity = (Entity) actor.getUserObject();
+				Func.centerCamera(entity);
+			} else if (hudNotifBut.isPressed()) {
+				hudNotifScroll.setVisible(!hudNotifScroll.isVisible());
+			}
 
-									}
-								};
+		}
+	};
 
 	private void creadeMenu() {
 		menuHolder.setFillParent(true);
@@ -92,28 +91,28 @@ public class GamePlayStage extends Stage {
 		addActor(menuHolder);
 	}
 
-	ChangeListener	menuListener	= new ChangeListener() {
+	ChangeListener menuListener = new ChangeListener() {
 
-										@Override
-										public void changed( ChangeEvent event, Actor actor ) {
-											if ( menuResume.isPressed() ) {
-												changeGroup(hudHolder);
-											} else if ( menuMMenu.isPressed() ) {
-												SF.game.setScreen(SF.mc);
-											}
+		@Override
+		public void changed(ChangeEvent event, Actor actor) {
+			if (menuResume.isPressed()) {
+				changeGroup(hudHolder);
+			} else if (menuMMenu.isPressed()) {
+				SF.game.setScreen(SF.mc);
+			}
 
-										}
-									};
+		}
+	};
 
 	public void restart() {
-		entActors.clear();
+//		entActors.clear();
 		hudNotifHolder.clearChildren();
 		currentGroup = hudHolder;
 		hudHolder.setVisible(true);
 		menuHolder.setVisible(false);
 	}
 
-	public void resize( int width, int height ) {
+	public void resize(int width, int height) {
 		getViewport().setScreenSize(width, height);
 		getViewport().update(width, height, true);
 		hudNotifBut.setPosition(0, 0);
@@ -121,17 +120,17 @@ public class GamePlayStage extends Stage {
 		hudNotifScroll.setPosition(hudNotifBut.getWidth() * 1.08f, 0);
 		hudCenter.setPosition(getWidth() * 0.1f, getHeight() - hudCenter.getHeight());
 
-		for (IActable act : entActors)
-			act.resize(width, height);
+//		for (IActable act : entActors)
+//			act.resize(maxWidth, maxHeight);
 	}
 
-	public void changeGroup( Group newGroup ) {
+	public void changeGroup(Group newGroup) {
 		currentGroup.setVisible(false);
 		currentGroup = newGroup;
 		currentGroup.setVisible(true);
 	}
 
-	public void manage( float delta ) {
+	public void manage(float delta) {
 		act();
 		draw();
 	}
@@ -141,9 +140,9 @@ public class GamePlayStage extends Stage {
 		super.dispose();
 	}
 
-	public void addEntActor( IActable act ) {
-		entActors.add(act);
-		addActor(act.getGroup());
-	}
+	// public void addEntActor(IActable act) {
+	// entActors.add(act);
+	// addActor(act.getGroup());
+	// }
 
 }

@@ -18,15 +18,15 @@ import com.nemo9955.starting_fire.utils.OrthoCamController;
 
 public class Gameplay extends InputAdapter implements Screen {
 
-	public GamePlayStage		stage;
+	public GamePlayStage stage;
 
-	private World				world;
+	private World world;
 
-	public OrthographicCamera	camera;
-	private ScreenViewport		viewport;
-	private OrthoCamController	cameraController;
+	public OrthographicCamera camera;
+	private ScreenViewport viewport;
+	private OrthoCamController cameraController;
 
-	public InputMultiplexer		inputs	= new InputMultiplexer();
+	public InputMultiplexer inputs = new InputMultiplexer();
 
 	{
 		camera = new OrthographicCamera();
@@ -48,12 +48,13 @@ public class Gameplay extends InputAdapter implements Screen {
 		Gdx.input.setInputProcessor(inputs);
 		stage.restart();
 		world = new World(19, 15, 128, 83);
+		inputs.addProcessor(world.player);
 	}
 
-	private long	startTime;
+	private long startTime;
 
 	@Override
-	public void render( float delta ) {
+	public void render(float delta) {
 		Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -69,7 +70,8 @@ public class Gameplay extends InputAdapter implements Screen {
 		// SF.shapeRend.end();
 		stage.manage(delta);
 
-		if ( TimeUtils.nanoTime() - startTime > 1000000000 ) /* 1,000,000,000ns == one second */{
+		if (TimeUtils.nanoTime()
+				- startTime > 1000000000) /* 1,000,000,000ns == one second */ {
 			Gdx.graphics.setTitle(Vars.title + " - FPS : " + Gdx.graphics.getFramesPerSecond());
 			startTime = TimeUtils.nanoTime();
 		}
@@ -77,14 +79,14 @@ public class Gameplay extends InputAdapter implements Screen {
 	}
 
 	@Override
-	public void resize( int width, int height ) {
+	public void resize(int width, int height) {
 		stage.resize(width, height);
 		viewport.update(width, height);
 	}
 
 	@Override
-	public boolean touchDown( int screenX, int screenY, int pointer, int button ) {
-		if ( button == Buttons.RIGHT ) {
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		if (button == Buttons.RIGHT) {
 			Ray ray = camera.getPickRay(screenX, screenY);
 			world.hit(ray.origin.x, ray.origin.y);
 		}
@@ -92,13 +94,13 @@ public class Gameplay extends InputAdapter implements Screen {
 	}
 
 	@Override
-	public boolean keyTyped( char character ) {
-		switch ( character ) {
-			case 'r' :
-				world.generateNewWorldType();
-				break;
-			default :
-				break;
+	public boolean keyTyped(char character) {
+		switch (character) {
+		case 'r':
+			world.generateNewWorldType();
+			break;
+		default:
+			break;
 		}
 		return false;
 	}
@@ -114,17 +116,19 @@ public class Gameplay extends InputAdapter implements Screen {
 	}
 
 	@Override
-	public void pause() {}
+	public void pause() {
+	}
 
 	@Override
-	public void resume() {}
+	public void resume() {
+	}
 
 	public World getWorld() {
 		return world;
 	}
 
-	public void activateAllInputes( boolean allInputs ) {
-		if ( allInputs )
+	public void activateAllInputes(boolean allInputs) {
+		if (allInputs)
 			Gdx.input.setInputProcessor(SF.gameplay.inputs);
 		else
 			Gdx.input.setInputProcessor(SF.gameplay.stage);

@@ -3,6 +3,7 @@ package com.nemo9955.starting_fire.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.ai.fsm.StackStateMachine;
+import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,9 +12,10 @@ import com.nemo9955.starting_fire.storage.SF;
 
 public class MenuController extends ScreenAdapter {
 
-	public StateMachine<MenuController, MainMenu>	mst		= new StackStateMachine<MenuController, MainMenu>(this);
+	public StateMachine<MenuController, State<MenuController>> mst = new StackStateMachine<MenuController, State<MenuController>>(
+			this);
 
-	final Stage							stage	= new Stage(new ScreenViewport(), SF.spritesBatch);
+	final Stage stage = new Stage(new ScreenViewport(), SF.spritesBatch);
 
 	@Override
 	public void show() {
@@ -23,7 +25,7 @@ public class MenuController extends ScreenAdapter {
 	}
 
 	@Override
-	public void render( float delta ) {
+	public void render(float delta) {
 		Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		mst.update();
@@ -32,7 +34,7 @@ public class MenuController extends ScreenAdapter {
 	}
 
 	@Override
-	public void resize( int width, int height ) {
+	public void resize(int width, int height) {
 		stage.getViewport().update(width, height, true);
 	}
 }

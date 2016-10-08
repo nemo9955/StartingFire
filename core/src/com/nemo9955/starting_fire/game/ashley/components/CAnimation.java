@@ -2,8 +2,6 @@ package com.nemo9955.starting_fire.game.ashley.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
 public class CAnimation /*extends Animation*/ implements Poolable,Component {
@@ -15,10 +13,12 @@ public class CAnimation /*extends Animation*/ implements Poolable,Component {
 	private int DEGEABA;
 
 	public Animation	anim;
+	public float stateTime ;
 
 	@Override
 	public void reset() {
 		anim = null;
+		stateTime=0;
 	}
 
 }
